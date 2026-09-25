@@ -1,97 +1,801 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Accessori 3D per moto da cross, ideati e prodotti da Giorgio e Federico." />
-    <title>GF Offroad Lab — Accessori 3D per Cross</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css" />
-  </head>
-  <body>
-    <header class="header">
-      <a class="brand" href="#top" aria-label="GF Offroad Lab, torna all'inizio">
-        <span class="brand-mark">GF</span>
-        <span><b>OFFROAD</b><small>3D PERFORMANCE LAB</small></span>
-      </a>
-      <nav aria-label="Navigazione principale">
-        <a href="#prodotti">Shop</a>
-        <a href="#chi-siamo">Chi siamo</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <button class="cart-button" id="cartButton" aria-label="Apri il carrello">
-        Carrello <span id="cartCount">0</span>
-      </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GF Offroad Lab — 3D Performance Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --surface-card: #1f1f1f;
+            --text: #f3f3f3;
+            --text-muted: #888888;
+            --accent: #ff4500; /* Accento arancio racing */
+            --border: #2a2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-title {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header a.logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        header a.logo span:first-child {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: var(--accent);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        header a.logo b {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        header a.logo small {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text);
+        }
+
+        .cart-btn {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: border-color 0.2s;
+        }
+
+        .cart-btn:hover {
+            border-color: var(--accent);
+        }
+
+        /* MAIN HERO */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+            background: radial-gradient(circle at 80% 30%, rgba(255, 69, 0, 0.08) 0%, transparent 50%);
+        }
+
+        .hero p.tag {
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--text-muted);
+        }
+
+        .hero p.desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--text);
+            color: var(--bg);
+            padding: 0.9rem 1.8rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: background 0.2s, transform 0.2s;
+            width: fit-content;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* TICKER */
+        .ticker {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            gap: 3rem;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .ticker span {
+            display: inline-flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .ticker i {
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        /* SHOP SECTION */
+        section.shop-section {
+            padding: 8rem 5% 5rem 5%;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-header p {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .product-img-placeholder {
+            height: 220px;
+            background: var(--surface-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .btn-add {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-add:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* METODO & CHI SIAMO */
+        .method-section, .about-section {
+            padding: 6rem 5%;
+            border-top: 1px solid var(--border);
+        }
+
+        .method-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media(max-width: 768px) {
+            .method-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-item b {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 6rem 5%;
+            border-top: 1px solid var(--border);
+        }
+
+        details {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: 600;
+            font-size: 1.1rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        details p {
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: var(--text); text-decoration: none; font-weight: 600; }
+
+        /* CART DRAWER */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: 2001;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cart-overlay.open .cart-drawer {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 1.2rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cart-empty {
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface-card);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .cart-item-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cart-item-info span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .cart-total span:last-child {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-checkout:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a class="logo" href="#top">
+            <span>GF</span>
+            <div>
+                <b>OFFROAD</b>
+                <small>3D PERFORMANCE LAB</small>
+            </div>
+        </a>
+        <nav>
+            <a href="#prodotti" class="active">Shop</a>
+            <a href="#chi-siamo">Chi siamo</a>
+            <a href="#faq">FAQ</a>
+            <button class="cart-btn" onclick="toggleCart()">
+                🛒 Box <span id="cart-count">(0)</span>
+            </button>
+        </nav>
     </header>
 
     <main id="top">
-      <section class="hero">
-        <div class="hero-grid"></div>
-        <div class="hero-copy">
-          <p class="eyebrow">PROGETTATI PER SPORCARSI</p>
-          <h1>PEZZI PICCOLI.<br /><em>GIORNATE GRANDI.</em></h1>
-          <p class="hero-text">Accessori stampati in 3D per chi vive la moto da cross davvero: semplici, robusti, utili.</p>
-          <a class="button primary" href="#prodotti">Scopri i prodotti <span>→</span></a>
+        <!-- HERO -->
+        <section class="hero">
+            <p class="tag">PROGETTATI PER SPORCARSI</p>
+            <h1>PEZZI PICCOLI.<br><em>GIORNATE GRANDI.</em></h1>
+            <p class="desc">Accessori stampati in 3D per chi vive la moto da cross davvero: semplici, robusti, utili.</p>
+            <a href="#prodotti" class="btn-primary">Scopri i prodotti <span>→</span></a>
+        </section>
+
+        <!-- TICKER -->
+        <div class="ticker">
+            <span>MADE FOR MUD <i>✦</i> STAMPATO IN ITALIA <i>✦</i> TESTATO IN PISTA <i>✦</i> FATTO DA RIDER <i>✦</i> MADE FOR MUD <i>✦</i> STAMPATO IN ITALIA <i>✦</i> TESTATO IN PISTA <i>✦</i> FATTO DA RIDER</span>
         </div>
-        <aside class="hero-card">
-          <span>01 / 03</span>
-          <div class="plug-illustration" aria-hidden="true"><i></i><i></i><i></i></div>
-          <strong>TAPPO LAVAGGIO<br />SCARICO</strong>
-          <small>IL PRIMO PEZZO DEL LAB</small>
-        </aside>
-        <div class="scroll-note">SCROLL TO RIDE <span>↓</span></div>
-      </section>
 
-      <section class="marquee" aria-label="Caratteristiche">
-        <span>MADE FOR MUD</span><i>✦</i><span>STAMPATO IN ITALIA</span><i>✦</i><span>TESTATO IN PISTA</span><i>✦</i><span>FATTO DA RIDER</span><i>✦</i>
-      </section>
+        <!-- SHOP / PRODOTTI -->
+        <section id="prodotti" class="shop-section">
+            <div class="section-header">
+                <p>IL PRIMO DROP</p>
+                <h2>ESSENZIALI <em>DA BOX.</em></h2>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Prodotto 1 -->
+                <div class="product-card">
+                    <div class="product-img-placeholder">
+                        <span class="product-badge">Best Seller</span>
+                        [ FOTO TAPPO SCARICO ]
+                    </div>
+                    <div class="product-info">
+                        <h3>Tappo Lavaggio Scarico</h3>
+                        <p>Evita l'ingresso di acqua e sporco nello scarico durante il lavaggio della moto. Design con O-ring di tenuta.</p>
+                        <div class="product-footer">
+                            <span class="product-price">€ 14,90</span>
+                            <button class="btn-add" onclick="addToCart('Tappo Lavaggio Scarico', 14.90)">Aggiungi</button>
+                        </div>
+                    </div>
+                </div>
 
-      <section class="products section" id="prodotti">
-        <div class="section-heading">
-          <div><p class="eyebrow">IL PRIMO DROP</p><h2>ESSENZIALI<br /><em>DA BOX.</em></h2></div>
-          <p>La collezione iniziale. Ogni componente nasce per risolvere un piccolo problema quando sei in garage, al lavaggio o al circuito.</p>
-        </div>
-        <div class="product-grid" id="productGrid"></div>
-      </section>
+                <!-- Prodotto 2 (Nuovo inserito) -->
+                <div class="product-card">
+                    <div class="product-img-placeholder">
+                        <span class="product-badge">Novità Lab</span>
+                        [ FOTO TAPPO FILTRO ]
+                    </div>
+                    <div class="product-info">
+                        <h3>Tappo Filtro per Lavaggio</h3>
+                        <p>Sostituisce il filtro aria originale durante i lavaggi aggressivi per proteggere l'airbox da acqua e residui di sapone.</p>
+                        <div class="product-footer">
+                            <span class="product-price">€ 19,90</span>
+                            <button class="btn-add" onclick="addToCart('Tappo Filtro per Lavaggio', 19.90)">Aggiungi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <section class="why section">
-        <div class="why-visual"><div class="number">3D</div><p>DAL FILE ALLA TUA MOTO</p></div>
-        <div class="why-copy"><p class="eyebrow">IL NOSTRO METODO</p><h2>FUNZIONE<br />PRIMA DI TUTTO.</h2><p>Progettiamo accessori che vorremmo trovare anche noi nel borsone. Materiali resistenti, geometrie studiate e produzione in piccoli lotti.</p>
-          <div class="features"><div><b>01</b><span>Progettato<br />in casa</span></div><div><b>02</b><span>Stampato<br />in 3D</span></div><div><b>03</b><span>Provato<br />nel fango</span></div></div>
-        </div>
-      </section>
+        <!-- METODO -->
+        <section class="method-section">
+            <div class="method-grid">
+                <div>
+                    <p style="color: var(--accent); font-weight: 700; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 0.5rem;">DAL FILE ALLA TUA MOTO</p>
+                    <h2>FUNZIONE <em>PRIMA DI TUTTO.</em></h2>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">Progettiamo accessori che vorremmo trovare anche noi nel borsone. Materiali resistenti, geometrie studiate e produzione in piccoli lotti.</p>
+                </div>
+                <div class="steps">
+                    <div class="step-item">
+                        <b>01</b>
+                        <div>
+                            <h4 style="font-family:'Space Grotesk'; font-size:1.1rem; margin-bottom:0.2rem;">Progettato in casa</h4>
+                            <p style="color: var(--text-muted); font-size:0.9rem;">Disegnato in CAD ottimizzando spessori e robustezza.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <b>02</b>
+                        <div>
+                            <h4 style="font-family:'Space Grotesk'; font-size:1.1rem; margin-bottom:0.2rem;">Stampato in 3D</h4>
+                            <p style="color: var(--text-muted); font-size:0.9rem;">Utilizzo di materiali tecnici ad alte prestazioni.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <b>03</b>
+                        <div>
+                            <h4 style="font-family:'Space Grotesk'; font-size:1.1rem; margin-bottom:0.2rem;">Provato nel fango</h4>
+                            <p style="color: var(--text-muted); font-size:0.9rem;">Testato direttamente sotto pressione nel paddock e in pista.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <section class="about section" id="chi-siamo">
-        <p class="eyebrow">DUE AMICI, UNA PASSIONE</p>
-        <h2>SIAMO GIORGIO<br />E <em>FEDERICO.</em></h2>
-        <p>GF Offroad Lab parte da qui: moto, weekend in pista e la voglia di costruire accessori più intelligenti. Questo è solo l’inizio.</p>
-        <a href="mailto:ciao@gfoffroadlab.it" class="text-link">Parliamo del tuo prossimo pezzo <span>↗</span></a>
-      </section>
+        <!-- CHI SIAMO -->
+        <section id="chi-siamo" class="about-section">
+            <p style="color: var(--accent); font-weight: 700; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 0.5rem;">DUE AMICI, UNA PASSIONE</p>
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">SIAMO GIORGIO<br>E <em>FEDERICO.</em></h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin-bottom: 2rem;">GF Offroad Lab parte da qui: moto, weekend in pista e la voglia di costruire accessori più intelligenti. Questo è solo l’inizio.</p>
+            <a href="mailto:ciao@gfoffroadlab.it" class="btn-primary">Parliamo del tuo prossimo pezzo <span>↗</span></a>
+        </section>
 
-      <section class="faq section" id="faq">
-        <div><p class="eyebrow">DOMANDE VELOCI</p><h2>PRIMA DI<br /><em>PARTIRE.</em></h2></div>
-        <div class="faq-list">
-          <details open><summary>Che materiale usate? <span>+</span></summary><p>Per questa demo abbiamo indicato PETG tecnico: è resistente a urti, umidità e all’uso in garage. Il materiale definitivo sarà specificato per ogni prodotto.</p></details>
-          <details><summary>Come posso ordinare? <span>+</span></summary><p>Completa la richiesta sul sito: Giorgio e Federico la riceveranno nel pannello ordini e ti contatteranno per la conferma.</p></details>
-          <details><summary>Potete fare pezzi personalizzati? <span>+</span></summary><p>Sì. Scrivici con modello della moto, foto e idea: valuteremo insieme fattibilità e preventivo.</p></details>
-        </div>
-      </section>
+        <!-- FAQ -->
+        <section id="faq" class="faq-section">
+            <div class="section-header">
+                <p>DOMANDE VELOCI</p>
+                <h2>PRIMA DI <em>PARTIRE.</em></h2>
+            </div>
+            
+            <details>
+                <summary>Che materiale usate? <span>+</span></summary>
+                <p>Utilizziamo filamenti tecnici come il PETG e materiali rinforzati: sono resistenti a urti, umidità e agli agenti chimici usati in garage.</p>
+            </details>
+            <details>
+                <summary>Come posso ordinare? <span>+</span></summary>
+                <p>Aggiungi i pezzi al box e completa la richiesta: Giorgio e Federico la riceveranno e ti contatteranno per la conferma definitiva.</p>
+            </details>
+            <details>
+                <summary>Potete fare pezzi personalizzati? <span>+</span></summary>
+                <p>Sì! Scrivici con il modello della moto, foto e la tua idea: valuteremo insieme fattibilità e preventivo.</p>
+            </details>
+        </section>
     </main>
 
-    <footer><a class="brand" href="#top"><span class="brand-mark">GF</span><span><b>OFFROAD</b><small>3D PERFORMANCE LAB</small></span></a><p>© <span id="year"></span> Giorgio & Federico — Italia</p><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a></footer>
+    <!-- FOOTER -->
+    <footer>
+        <a href="#top" class="logo" style="display:flex; align-items:center; gap:8px;">
+            <span style="font-family:'Space Grotesk'; background:var(--accent); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.9rem;">GF</span>
+            <b>OFFROAD</b>
+        </a>
+        <p>© 2026 Giorgio & Federico — Italia</p>
+        <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a>
+    </footer>
 
-    <aside class="cart-panel" id="cartPanel" aria-label="Carrello" aria-hidden="true">
-      <div class="cart-header"><h2>IL TUO BOX</h2><button id="closeCart" aria-label="Chiudi carrello">×</button></div>
-      <div id="cartItems" class="cart-items"><p class="empty">Il carrello è vuoto.<br />Trova il tuo prossimo pezzo.</p></div>
-      <div class="cart-footer"><div><span>Totale</span><b id="cartTotal">€0,00</b></div><button class="button primary checkout" id="checkout">Continua con l'ordine <span>→</span></button></div>
-    </aside>
-    <section class="order-modal" id="orderModal" aria-hidden="true">
-      <div class="order-card"><button class="modal-close" id="closeOrder" aria-label="Chiudi">×</button><p class="eyebrow">QUASI FATTO</p><h2>DATI PER<br /><em>L'ORDINE.</em></h2><p class="order-intro">Inserisci i tuoi dati: Giorgio e Federico riceveranno l'ordine e ti contatteranno per confermare.</p><form id="orderForm"><label>Nome e cognome<input required name="name" placeholder="Es. Marco Rossi" /></label><label>Telefono<input required name="phone" type="tel" placeholder="Es. 333 1234567" /></label><label>Email <small>(facoltativa)</small><input name="email" type="email" placeholder="nome@email.it" /></label><label>Note <small>(facoltative)</small><textarea name="note" placeholder="Modello moto, colore o richiesta..."></textarea></label><button class="button primary submit-order" type="submit">Invia richiesta <span>→</span></button></form></div>
-    </section>
-    <div class="overlay" id="overlay"></div>
-    <script src="script.js"></script>
-  </body>
+    <!-- CARRELLO DRAWER -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()">
+        <div class="cart-drawer" onclick="event.stopPropagation()">
+            <div class="cart-header">
+                <h3>IL TUO BOX</h3>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div class="cart-body" id="cartBody">
+                <div class="cart-empty">Il carrello è vuoto.<br>Trova il tuo prossimo pezzo.</div>
+            </div>
+            <div class="cart-footer" id="cartFooter" style="display: none;">
+                <div class="cart-total">
+                    <span>Totale</span>
+                    <span id="cartTotalPrice">€ 0,00</span>
+                </div>
+                <button class="btn-checkout" onclick="checkoutOrder()">Invia Richiesta Ordine</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT GESTIONE CARRELLO -->
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            document.getElementById('cartOverlay').classList.toggle('open');
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            updateCartUI();
+            toggleCart();
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartBody = document.getElementById('cartBody');
+            const cartFooter = document.getElementById('cartFooter');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotalPrice = document.getElementById('cartTotalPrice');
+
+            let totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartCount.textContent = `(${totalCount})`;
+
+            if (cart.length === 0) {
+                cartBody.innerHTML = `<div class="cart-empty">Il carrello è vuoto.<br>Trova il tuo prossimo pezzo.</div>`;
+                cartFooter.style.display = 'none';
+                return;
+            }
+
+            cartFooter.style.display = 'block';
+            let totalPrice = 0;
+            let html = '';
+
+            cart.forEach(item => {
+                let itemTotal = item.price * item.qty;
+                totalPrice += itemTotal;
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <span>€ ${item.price.toFixed(2)} x ${item.qty}</span>
+                        </div>
+                        <div class="cart-item-actions">
+                            <b>€ ${itemTotal.toFixed(2)}</b>
+                            <button class="remove-item" onclick="removeFromCart('${item.name}')">Rimuovi</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartBody.innerHTML = html;
+            cartTotalPrice.textContent = `€ ${totalPrice.toFixed(2)}`;
+        }
+
+        function checkoutOrder() {
+            if (cart.length === 0) return;
+            let orderSummary = "Ciao Giorgio e Federico, vorrei ordinare:\n\n";
+            cart.forEach(item => {
+                orderSummary += `- ${item.name} x${item.qty} (€ ${(item.price * item.qty).toFixed(2)})\n`;
+            });
+            let total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            orderSummary += `\nTotale: € ${total.toFixed(2)}`;
+
+            // Apre il client email predefinito con l'ordine precompilato
+            window.location.href = `mailto:ciao@gfoffroadlab.it?subject=Nuovo Ordine Box&body=${encodeURIComponent(orderSummary)}`;
+        }
+    </script>
+</body>
 </html>
