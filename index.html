@@ -1,116 +1,906 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GF Offroad Lab</title>
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-    <link rel="stylesheet" href="style.css"> <!-- Se usi un file CSS esterno o inserisci il tuo stile qui -->
+    <title>CrossGear 3D | Tappi di Lavaggio per Moto da Cross - di Giorgio & Federico</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        crossNeon: '#ccff00', // Ultra neon yellow racing accent
+                        crossDark: '#0b0b0b',
+                        crossDarker: '#030303',
+                        crossCard: '#141414',
+                        crossGray: '#222222'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter & Teko -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-racing { font-family: 'Teko', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #ccff00; border-radius: 4px; }
+        .neon-glow { box-shadow: 0 0 25px rgba(204, 255, 0, 0.3); }
+    </style>
 </head>
-<body>
-    <header>
-        <a aria-label="GF Offroad Lab, torna all'inizio" href="#top">
-            <span>GF</span>
-            <span><b>OFFROAD</b><small>3D PERFORMANCE LAB</small></span>
-        </a>
-        <nav aria-label="Navigazione principale">
-            <a href="#prodotti">Shop</a>
-            <a href="#chi-siamo">Chi siamo</a>
-            <a href="#faq">FAQ</a>
-        </nav>
+<body class="bg-crossDark text-gray-100 min-h-screen flex flex-col items-center justify-start selection:bg-crossNeon selection:text-black">
+
+    <header class="sticky top-0 z-50 w-full bg-crossDarker/95 backdrop-blur border-b border-crossGray shadow-2xl">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            
+            <!-- Logo & Brand perfettamente centrati -->
+            <div class="flex items-center justify-center space-x-3 cursor-pointer" onclick="switchNavTab('home')">
+                <div class="bg-crossNeon p-2.5 rounded-xl shadow-lg shadow-crossNeon/30 text-black flex items-center justify-center font-black text-2xl">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                <div>
+                    <span class="font-racing text-3xl tracking-wider text-white">CROSS<span class="text-crossNeon">GEAR</span> <span class="text-xs bg-crossNeon/10 border border-crossNeon/30 text-crossNeon px-1.5 py-0.5 rounded font-sans">3D LAB</span></span>
+                    <p class="text-[10px] text-gray-400 tracking-widest uppercase -mt-1 font-semibold text-center sm:text-left">by Giorgio & Federico</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs & Cart -->
+            <div class="flex items-center justify-center space-x-3">
+                <button onclick="switchNavTab('home')" id="navHomeBtn" class="bg-crossNeon text-black font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl transition-all shadow-md">
+                    Home & Storia
+                </button>
+                <button onclick="switchNavTab('shop')" id="navShopBtn" class="bg-crossGray hover:bg-crossNeon hover:text-black text-gray-200 font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl transition-all border border-crossGray">
+                    Shop 3D
+                </button>
+                <button onclick="toggleAdminMode()" id="navAdminBtn" class="bg-crossGray hover:bg-crossNeon hover:text-black text-crossNeon font-bold uppercase tracking-wider text-xs px-3.5 py-2 rounded-xl transition-all border border-crossNeon/30" title="Area Admin">
+                    <i class="fa-solid fa-user-shield"></i>
+                </button>
+
+                <button onclick="openCart()" id="cartBtn" class="relative bg-crossCard hover:bg-crossGray border border-crossGray p-2.5 rounded-xl transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-cart-shopping text-crossNeon text-lg"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-crossNeon text-black font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-md">0</span>
+                </button>
+
+                <div id="userBadge" class="hidden items-center space-x-2 bg-crossGray/60 px-3 py-1.5 rounded-xl border border-gray-700 text-sm">
+                    <i class="fa-solid fa-user-circle text-crossNeon"></i>
+                    <span id="userNameDisplay" class="font-medium text-xs text-gray-200"></span>
+                    <button onclick="logoutCustomer()" class="text-gray-400 hover:text-red-400 ml-2" title="Esci"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main id="top">
-        <section>
-            <div></div>
-            <div>
-                <p>PROGETTATI PER SPORCARSI</p>
-                <h1>PEZZI PICCOLI.<br><em>GIORNATE GRANDI.</em></h1>
-                <p>Accessori stampati in 3D per chi vive la moto da cross davvero: semplici, robusti, utili.</p>
-                <a href="#prodotti">Scopri i prodotti <span>→</span></a>
-            </div>
-            <aside>
-                <span>01 / 03</span>
-                <div aria-hidden="true"><i></i><i></i><i></i></div>
-                <strong>TAPPO LAVAGGIO<br>SCARICO</strong>
-                <small>IL PRIMO PEZZO DEL LAB</small>
-            </aside>
-            <div>SCROLL TO RIDE <span>↓</span></div>
-        </section>
+    <main class="w-full max-w-4xl mx-auto px-4 flex-grow flex flex-col items-center">
 
-        <section aria-label="Caratteristiche">
-            <span>MADE FOR MUD</span><i>✦</i><span>STAMPATO IN ITALIA</span><i>✦</i><span>TESTATO IN PISTA</span><i>✦</i><span>FATTO DA RIDER</span><i>✦</i>
-        </section>
-
-        <section id="prodotti">
-            <div>
-                <div><p>IL PRIMO DROP</p><h2>ESSENZIALI<br><em>DA BOX.</em></h2></div>
-                <p>La collezione iniziale. Ogni componente nasce per risolvere un piccolo problema quando sei in garage, al lavaggio o al circuito.</p>
-            </div>
+        <!-- VIEW 1: HOME & STORIA CON FOTO -->
+        <div id="homeView" class="w-full py-8 space-y-12 flex flex-col items-center">
             
-            <!-- Griglia Prodotti Aggiornata con il Tappo Filtro -->
-            <div class="prodotti-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                <!-- Prodotto 1: Tappo Scarico -->
-                <div class="prodotto-card" style="background: var(--surface, #161616); border: 1px solid var(--border, #2a2a2a); padding: 1.5rem; border-radius: 8px;">
-                    <h3>Tappo Lavaggio Scarico</h3>
-                    <p style="margin: 1rem 0; color: #888;">Evita l'ingresso di acqua e sporco nello scarico durante il lavaggio.</p>
-                    <strong>€ 14,90</strong>
+            <!-- Hero Banner con Foto di voi in azione -->
+            <section class="w-full bg-gradient-to-br from-crossCard via-crossGray to-crossDark border border-crossNeon/40 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden text-center space-y-8">
+                <div class="max-w-2xl mx-auto space-y-4">
+                    <span class="bg-crossNeon/10 text-crossNeon border border-crossNeon/30 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block">
+                        I Fondatori & Piloti
+                    </span>
+                    <h1 class="font-racing text-5xl sm:text-7xl tracking-wide uppercase leading-none text-white">
+                        AMICI A SCUOLA, <span class="text-crossNeon">PILOTI IN PISTA</span>
+                    </h1>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed font-light">
+                        Ci siamo conosciuti tra i banchi di scuola condividendo la fissa per i motori, il fango e le staccate al limite. Oggi, unendo la nostra esperienza sui circuiti da cross con la tecnologia di stampa 3D, progettiamo e realizziamo accessori indistruttibili per ogni moto.
+                    </p>
                 </div>
-                
-                <!-- Prodotto 2: Tappo Filtro (Nuovo) -->
-                <div class="prodotto-card" style="background: var(--surface, #161616); border: 1px solid var(--border, #2a2a2a); padding: 1.5rem; border-radius: 8px;">
-                    <h3>Tappo Filtro per Lavaggio</h3>
-                    <p style="margin: 1rem 0; color: #888;">Protegge l'airbox durante il lavaggio della moto evitando infiltrazioni.</p>
-                    <strong>€ 19,90</strong>
+
+                <!-- Foto reali allegate inserite con stile racing -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                    <!-- Foto 1 -->
+                    <div class="bg-crossDark border border-crossNeon/30 rounded-2xl overflow-hidden shadow-xl group hover:border-crossNeon transition-all">
+                        <div class="h-64 sm:h-72 w-full overflow-hidden relative">
+                            <img src="image.png" alt="Giorgio in piega in pista da cross" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/141414/ccff00?text=Giorgio+MX+Action'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                                <div class="text-left">
+                                    <span class="bg-crossNeon text-black text-[10px] font-black uppercase px-2 py-0.5 rounded">Giorgio #107</span>
+                                    <p class="text-xs text-gray-200 mt-1">Staccata al limite in curva</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Foto 2 -->
+                    <div class="bg-crossDark border border-crossNeon/30 rounded-2xl overflow-hidden shadow-xl group hover:border-crossNeon transition-all">
+                        <div class="h-64 sm:h-72 w-full overflow-hidden relative">
+                            <img src="image_2.png" alt="Federico in sterrato con moto da cross" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/141414/ccff00?text=Federico+MX+Action'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                                <div class="text-left">
+                                    <span class="bg-crossNeon text-black text-[10px] font-black uppercase px-2 py-0.5 rounded">Federico #115</span>
+                                    <p class="text-xs text-gray-200 mt-1">Test nel fango del circuito locale</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <button onclick="switchNavTab('shop')" class="bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl shadow-lg shadow-crossNeon/30 transition-all text-sm flex items-center space-x-3">
+                        <i class="fa-solid fa-store text-base"></i>
+                        <span>Entra nello Shop 3D</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Sezione Caratteristiche Materiali 3D -->
+            <section class="w-full grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="bg-crossCard border border-crossGray p-6 rounded-2xl text-center space-y-3">
+                    <div class="w-12 h-12 bg-crossNeon/10 text-crossNeon border border-crossNeon/30 rounded-xl flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="font-racing text-2xl text-white uppercase tracking-wide">TPU Flessibile 95A</h3>
+                    <p class="text-xs text-gray-400">Materiali tecnici antiurto ed elastici, resistenti agli idrocarburi e alle intemperie.</p>
+                </div>
+                <div class="bg-crossCard border border-crossGray p-6 rounded-2xl text-center space-y-3">
+                    <div class="w-12 h-12 bg-crossNeon/10 text-crossNeon border border-crossNeon/30 rounded-xl flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="font-racing text-2xl text-white uppercase tracking-wide">Su Misura Moto</h3>
+                    <p class="text-xs text-gray-400">Ogni pezzo è configurato appositamente per marca, cilindrata e anno della tua moto.</p>
+                </div>
+                <div class="bg-crossCard border border-crossGray p-6 rounded-2xl text-center space-y-3">
+                    <div class="w-12 h-12 bg-crossNeon/10 text-crossNeon border border-crossNeon/30 rounded-xl flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="font-racing text-2xl text-white uppercase tracking-wide">Testato in Pista</h3>
+                    <p class="text-xs text-gray-400">Progettato e testato direttamente da noi (Giorgio & Federico) nei nostri allenamenti.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW 2: SHOP CATALOGO CON PULSANTI PULITI -->
+        <div id="shopView" class="hidden w-full py-8 space-y-8 flex flex-col items-center">
+            <div class="text-center space-y-2">
+                <span class="bg-crossNeon/10 text-crossNeon border border-crossNeon/30 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block">
+                    Catalogo Accessori 3D
+                </span>
+                <h2 class="font-racing text-4xl sm:text-5xl tracking-wide uppercase text-white">Scegli il Tuo Accessorio da Lavaggio</h2>
+                <p class="text-xs text-gray-400">Clicca su <strong class="text-crossNeon">"Aggiungi"</strong> per inserire la marca, la cilindrata e le personalizzazioni della tua moto.</p>
+            </div>
+
+            <div class="space-y-4 w-full max-w-2xl">
+                <!-- Prodotto 1: Tappo cassa filtro -->
+                <div class="bg-crossCard border border-crossGray hover:border-crossNeon transition-all duration-300 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+                    <div class="text-center sm:text-left">
+                        <span class="text-[10px] bg-crossNeon/10 text-crossNeon border border-crossNeon/30 uppercase px-2.5 py-0.5 rounded font-bold">TPU Flessibile 95A</span>
+                        <h3 class="font-racing text-3xl text-white tracking-wide mt-1">Tappo lavaggio cassa filtro</h3>
+                        <p class="text-xs text-gray-400">Protegge perfettamente la cassa filtro durante i lavaggi con idropulitrice.</p>
+                    </div>
+                    <div class="flex items-center space-x-4 w-full sm:w-auto justify-between sm:justify-end">
+                        <span class="font-racing text-3xl text-crossNeon">€ 12,99</span>
+                        <button onclick="openConfigModal(1)" class="bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg shadow-crossNeon/20 transition-all flex items-center space-x-2 text-xs">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span>Aggiungi</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prodotto 2: Tappo marmitta -->
+                <div class="bg-crossCard border border-crossGray hover:border-crossNeon transition-all duration-300 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+                    <div class="text-center sm:text-left">
+                        <span class="text-[10px] bg-crossNeon/10 text-crossNeon border border-crossNeon/30 uppercase px-2.5 py-0.5 rounded font-bold">TPU Conico Alta Tenuta</span>
+                        <h3 class="font-racing text-3xl text-white tracking-wide mt-1">Tappo lavaggio marmitta</h3>
+                        <p class="text-xs text-gray-400">Tappo terminale di scarico per impedire infiltrazioni d'acqua nel silenziatore.</p>
+                    </div>
+                    <div class="flex items-center space-x-4 w-full sm:w-auto justify-between sm:justify-end">
+                        <span class="font-racing text-3xl text-crossNeon">€ 8,99</span>
+                        <button onclick="openConfigModal(2)" class="bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg shadow-crossNeon/20 transition-all flex items-center space-x-2 text-xs">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span>Aggiungi</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prodotto 3: Tappi pulsanti manubrio -->
+                <div class="bg-crossCard border border-crossGray hover:border-crossNeon transition-all duration-300 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+                    <div class="text-center sm:text-left">
+                        <span class="text-[10px] bg-crossNeon/10 text-crossNeon border border-crossNeon/30 uppercase px-2.5 py-0.5 rounded font-bold">TPU Morbido Protettivo</span>
+                        <h3 class="font-racing text-3xl text-white tracking-wide mt-1">Tappi lavaggio pulsanti manubrio</h3>
+                        <p class="text-xs text-gray-400">Proteggono i comandi elettrici e il blocchetto start/stop dai getti d'acqua.</p>
+                    </div>
+                    <div class="flex items-center space-x-4 w-full sm:w-auto justify-between sm:justify-end">
+                        <span class="font-racing text-3xl text-crossNeon">€ 7,99</span>
+                        <button onclick="openConfigModal(3)" class="bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg shadow-crossNeon/20 transition-all flex items-center space-x-2 text-xs">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span>Aggiungi</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section>
-            <div><div>3D</div><p>DAL FILE ALLA TUA MOTO</p></div>
-            <div>
-                <p>IL NOSTRO METODO</p>
-                <h2>FUNZIONE<br>PRIMA DI TUTTO.</h2>
-                <p>Progettiamo accessori che vorremmo trovare anche noi nel borsone. Materiali resistenti, geometrie studiate e produzione in piccoli lotti.</p>
-                <div>
-                    <div><b>01</b><span>Progettato<br>in casa</span></div>
-                    <div><b>02</b><span>Stampato<br>in 3D</span></div>
-                    <div><b>03</b><span>Provato<br>nel fango</span></div>
+        <!-- VIEW 3: ADMIN DASHBOARD (GIORGIO & FEDERICO) -->
+        <div id="adminView" class="hidden w-full py-8">
+            <div id="adminLoginCard" class="max-w-md mx-auto bg-crossCard border border-crossGray rounded-2xl p-8 shadow-2xl my-12 text-center">
+                <div class="w-16 h-16 bg-crossNeon/10 border border-crossNeon/30 rounded-2xl flex items-center justify-center mx-auto mb-6 text-crossNeon text-2xl shadow-inner">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h2 class="font-racing text-3xl tracking-wider uppercase mb-2 text-white">Area Riservata Giorgio & Federico</h2>
+                <p class="text-gray-400 text-xs mb-6">Inserisci il PIN segreto dell'officina per visualizzare gli ordini in arrivo.</p>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <input type="password" id="adminPinInput" placeholder="PIN Segreto (1234)" required class="w-full bg-crossDark border border-crossGray rounded-xl px-4 py-3 text-center text-lg tracking-widest text-gray-200 focus:outline-none focus:border-crossNeon transition-all">
+                    </div>
+                    <button type="submit" class="w-full bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider py-3 rounded-xl shadow-lg shadow-crossNeon/20 transition-all">
+                        Sblocca Pannello Lab
+                    </button>
+                    <p class="text-[11px] text-gray-500 pt-2">PIN demo: <span class="text-crossNeon font-mono font-bold">1234</span></p>
+                </form>
+            </div>
+
+            <div id="adminDashboard" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-crossCard border border-crossGray rounded-2xl p-6 shadow-xl gap-4">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-1">
+                            <span class="bg-crossNeon text-black text-[10px] uppercase font-black px-2.5 py-0.5 rounded-md">Lab Attivo</span>
+                            <span class="text-xs text-gray-400"><i class="fa-solid fa-circle text-green-500 text-[8px] animate-pulse"></i> Stampanti 3D pronte</span>
+                        </div>
+                        <h2 class="font-racing text-3xl tracking-wide uppercase text-white">Gestione Ordini per Cliente</h2>
+                        <p class="text-xs text-gray-400">Verifica i dati dei piloti, marca moto, cilindrata e specifiche di stampa 3D.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="resetDemoOrders()" class="bg-crossGray hover:bg-red-500/20 hover:text-red-400 text-gray-300 text-xs font-bold uppercase px-4 py-2.5 rounded-xl border border-crossGray transition-all">
+                            <i class="fa-solid fa-rotate-right mr-1.5"></i> Resetta Demo
+                        </button>
+                        <button onclick="lockAdminPanel()" class="bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white text-xs font-bold uppercase px-4 py-2.5 rounded-xl border border-red-500/30 transition-all">
+                            <i class="fa-solid fa-lock mr-1.5"></i> Blocca Admin
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-crossCard border border-crossGray rounded-2xl p-6 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-gray-400 text-xs font-bold uppercase">Totale Ordini</span>
+                            <i class="fa-solid fa-box-archive text-crossNeon text-xl"></i>
+                        </div>
+                        <p id="statTotalOrders" class="font-racing text-4xl text-white">0</p>
+                    </div>
+                    <div class="bg-crossCard border border-crossGray rounded-2xl p-6 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-gray-400 text-xs font-bold uppercase">Fatturato Lab</span>
+                            <i class="fa-solid fa-euro-sign text-green-400 text-xl"></i>
+                        </div>
+                        <p id="statTotalRevenue" class="font-racing text-4xl text-green-400">€ 0.00</p>
+                    </div>
+                    <div class="bg-crossCard border border-crossGray rounded-2xl p-6 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-gray-400 text-xs font-bold uppercase">Clienti Registrati</span>
+                            <i class="fa-solid fa-users text-blue-400 text-xl"></i>
+                        </div>
+                        <p id="statTotalCustomers" class="font-racing text-4xl text-blue-400">0</p>
+                    </div>
+                </div>
+
+                <div class="bg-crossCard border border-crossGray rounded-2xl p-6 shadow-xl">
+                    <h3 class="font-racing text-2xl tracking-wide uppercase mb-4 flex items-center justify-between text-white">
+                        <span><i class="fa-solid fa-list-check text-crossNeon mr-2"></i> Ordini per Cliente</span>
+                        <span id="ordersCountBadge" class="text-xs bg-crossGray px-3 py-1 rounded-full font-sans text-gray-300">0 ordini</span>
+                    </h3>
+                    <div id="adminOrdersContainer" class="space-y-6">
+                        <!-- Populated via JS -->
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="chi-siamo">
-            <p>DUE AMICI, UNA PASSIONE</p>
-            <h2>SIAMO GIORGIO<br>E <em>FEDERICO.</em></h2>
-            <p>GF Offroad Lab parte da qui: moto, weekend in pista e la voglia di costruire accessori più intelligenti. Questo è solo l’inizio.</p>
-            <a href="mailto:ciao@gfoffroadlab.it">Parliamo del tuo prossimo pezzo <span>↗</span></a>
-        </section>
-
-        <section id="faq">
-            <div><p>DOMANDE VELOCI</p><h2>PRIMA DI<br><em>PARTIRE.</em></h2></div>
-            <div>
-                <details open><summary>Che materiale usate? <span>+</span></summary><p>Per questa demo abbiamo indicato PETG tecnico: è resistente a urti, umidità e all’uso in garage. Il materiale definitivo sarà specificato per ogni prodotto.</p></details>
-                <details><summary>Come posso ordinare? <span>+</span></summary><p>Completa la richiesta sul sito: Giorgio e Federico la riceveranno nel pannello ordini e ti contatteranno per la conferma.</p></details>
-                <details><summary>Potete fare pezzi personalizzati? <span>+</span></summary><p>Sì. Scrivici con modello della moto, foto e idea: valuteremo insieme fattibilità e preventivo.</p></details>
-            </div>
-        </section>
     </main>
 
-    <footer>
-        <a href="#top"><span>GF</span><span><b>OFFROAD</b><small>3D PERFORMANCE LAB</small></span></a>
-        <p>© <span>2026</span> Giorgio &amp; Federico — Italia</p>
-        <a href="https://instagram.com" rel="noreferrer" target="_blank">Instagram ↗</a>
+    <!-- Modale Configurazione Articolo -->
+    <div id="configModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-crossCard border border-crossNeon/50 rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeConfigModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="mb-6">
+                <span class="bg-crossNeon/10 text-crossNeon border border-crossNeon/30 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                    Configuratore Stampa 3D
+                </span>
+                <h3 id="configModalTitle" class="font-racing text-3xl tracking-wide uppercase mt-2 text-white">Titolo Prodotto</h3>
+                <p class="text-xs text-gray-400">Inserisci i dati della moto e le preferenze di stampa per questo pezzo.</p>
+            </div>
+            <form onsubmit="handleConfigSubmit(event)" class="space-y-4">
+                <input type="hidden" id="configProductId">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Marca Moto *</label>
+                        <select id="configBrand" class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-crossNeon">
+                            <option value="KTM">KTM</option>
+                            <option value="Yamaha">Yamaha</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Husqvarna">Husqvarna</option>
+                            <option value="GasGas">GasGas</option>
+                            <option value="Kawasaki">Kawasaki</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Altro">Altro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Cilindrata *</label>
+                        <input type="text" id="configDisp" placeholder="es. 250cc 4T" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-crossNeon">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Anno Moto *</label>
+                        <input type="text" id="configYear" placeholder="es. 2026" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-crossNeon">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Colore Filamento *</label>
+                        <select id="configColor" class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-crossNeon">
+                            <option value="Giallo Fluo Racing (#ccff00)">Giallo Fluo Racing</option>
+                            <option value="Nero Opaco Carbon">Nero Opaco Carbon</option>
+                            <option value="Arancio KTM">Arancio KTM</option>
+                            <option value="Rosso Racing">Rosso Racing</option>
+                            <option value="Blu Yamaha">Blu Yamaha</option>
+                            <option value="Bianco Puro">Bianco Puro</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Scritta o Numero Personalizzato (opzionale):</label>
+                    <input type="text" id="configCustomText" placeholder="es. #46 o Nome Pilota" class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-crossNeon">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider py-3.5 rounded-xl shadow-lg shadow-crossNeon/20 transition-all flex items-center justify-center space-x-2 text-xs">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>Aggiungi al Carrello</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modale Carrello -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex justify-end transition-opacity">
+        <div class="w-full max-w-md bg-crossCard h-full border-l border-crossGray flex flex-col shadow-2xl">
+            <div class="p-6 border-b border-crossGray flex items-center justify-between bg-crossDarker">
+                <h3 class="font-racing text-2xl tracking-wide uppercase flex items-center text-white">
+                    <i class="fa-solid fa-cart-shopping text-crossNeon mr-3"></i> Il Tuo Carrello 3D
+                </h3>
+                <button onclick="closeCart()" class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-crossGray transition-all">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="cartItemsList" class="flex-grow overflow-y-auto p-6 space-y-4">
+                <!-- Populated via JS -->
+            </div>
+            <div id="cartFooter" class="p-6 border-t border-crossGray bg-crossDarker">
+                <div class="flex justify-between mb-2 text-sm">
+                    <span class="text-gray-400">Spedizione Lab</span>
+                    <span class="text-green-400 font-bold">GRATIS (Da Giorgio & Fed)</span>
+                </div>
+                <div class="flex justify-between mb-6 text-lg font-bold">
+                    <span class="text-white">Totale</span>
+                    <span id="cartTotalPrice" class="text-crossNeon font-racing text-2xl">€ 0.00</span>
+                </div>
+                <button onclick="proceedToCheckoutRegistration()" class="w-full bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider py-3.5 rounded-xl shadow-lg shadow-crossNeon/20 transition-all flex items-center justify-center space-x-2 text-xs">
+                    <span>Continua Ordine & Registrati</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Registrazione Obbligatoria al Checkout -->
+    <div id="registrationModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-crossCard border border-crossNeon/50 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <button onclick="closeRegistrationModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="bg-crossNeon/10 text-crossNeon border border-crossNeon/30 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                    Registrazione Pilota Obbligatoria
+                </span>
+                <h3 class="font-racing text-3xl tracking-wider uppercase mt-3 text-white">Inserisci i Tuoi Dati</h3>
+                <p class="text-xs text-gray-400">Per completare l'ordine e ricevere i pezzi stampati in 3D, registrati qui sotto.</p>
+            </div>
+
+            <form onsubmit="handleCompleteOrder(event)" class="space-y-4 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-gray-300 uppercase mb-1">Nome *</label>
+                        <input type="text" id="regName" placeholder="Marco" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-gray-200 focus:outline-none focus:border-crossNeon">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-300 uppercase mb-1">Cognome *</label>
+                        <input type="text" id="regSurname" placeholder="Rossi" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-gray-200 focus:outline-none focus:border-crossNeon">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-300 uppercase mb-1">Email *</label>
+                    <input type="email" id="regEmail" placeholder="m.rossi@email.com" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-gray-200 focus:outline-none focus:border-crossNeon">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-300 uppercase mb-1">Indirizzo di Casa *</label>
+                    <input type="text" id="regAddress" placeholder="Via Roma 12, Milano" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-gray-200 focus:outline-none focus:border-crossNeon">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-gray-300 uppercase mb-1">Numero di Telefono *</label>
+                        <input type="tel" id="regPhone" placeholder="333 1234567" required class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-gray-200 focus:outline-none focus:border-crossNeon">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-300 uppercase mb-1">Opzioni Facoltative / Note</label>
+                        <input type="text" id="regNotes" placeholder="es. Citofonare Rossi / Note corriere" class="w-full bg-crossDark border border-crossGray rounded-xl px-3 py-2.5 text-gray-200 focus:outline-none focus:border-crossNeon">
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider py-3.5 rounded-xl shadow-lg shadow-crossNeon/20 transition-all flex items-center justify-center space-x-2 text-xs">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Conferma e Invia Ordine all'Officina</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-crossCard border border-crossNeon/50 rounded-2xl max-w-md w-full p-8 text-center shadow-2xl">
+            <div class="w-20 h-20 bg-crossNeon/10 border border-crossNeon/30 rounded-full flex items-center justify-center mx-auto mb-6 text-crossNeon text-3xl animate-bounce">
+                <i class="fa-solid fa-cube"></i>
+            </div>
+            <h3 class="font-racing text-3xl tracking-wider uppercase mb-2 text-white">Ordine Ricevuto da Giorgio & Fed!</h3>
+            <p id="successOrderId" class="text-xs text-crossNeon font-mono font-bold mb-4"></p>
+            <p class="text-gray-300 text-sm mb-6">
+                Grazie per la registrazione! L'ordine è arrivato correttamente nella dashboard di Giorgio e Federico. Le stampanti 3D sono già al lavoro!
+            </p>
+            <button onclick="closeSuccessModal()" class="bg-crossNeon hover:bg-lime-400 text-black font-bold uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg shadow-crossNeon/20 transition-all w-full text-xs">
+                Torna al Sito
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-crossCard border border-crossNeon text-gray-100 px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-3">
+        <div class="bg-crossNeon text-black w-8 h-8 rounded-xl flex items-center justify-center font-bold">
+            <i id="toastIcon" class="fa-solid fa-bell"></i>
+        </div>
+        <div>
+            <p id="toastTitle" class="text-xs font-bold uppercase tracking-wider text-crossNeon">CrossGear 3D</p>
+            <p id="toastMsg" class="text-sm font-medium"></p>
+        </div>
+    </div>
+
+    <footer class="w-full bg-crossDarker border-t border-crossGray py-12 mt-12 text-gray-400 text-sm flex flex-col items-center">
+        <div class="w-full max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
+            <div class="flex flex-col items-center md:items-start">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="bg-crossNeon p-2 rounded-lg text-black font-black text-xl">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <span class="font-racing text-2xl tracking-wider text-white">CROSS<span class="text-crossNeon">GEAR</span> 3D</span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed text-center md:text-left">
+                    Accessori da cross stampati in 3D. Fondato da Giorgio e Federico, amici dai tempi della scuola uniti dalla passione per le due ruote.
+                </p>
+            </div>
+            <div class="flex flex-col items-center md:items-start">
+                <h4 class="font-bold text-white uppercase text-xs tracking-wider mb-4 border-l-2 border-crossNeon pl-2">Contatti Lab</h4>
+                <p class="text-xs mb-2"><i class="fa-solid fa-location-dot text-crossNeon mr-2"></i> Laboratorio 3D, MX Park</p>
+                <p class="text-xs mb-2"><i class="fa-solid fa-envelope text-crossNeon mr-2"></i> ordini@crossgear3d.it</p>
+                <p class="text-xs"><i class="fa-solid fa-phone text-crossNeon mr-2"></i> +39 02 8976543 (Giorgio & Fed)</p>
+            </div>
+            <div class="flex flex-col items-center md:items-start">
+                <h4 class="font-bold text-white uppercase text-xs tracking-wider mb-4 border-l-2 border-crossNeon pl-2">Area Officina</h4>
+                <p class="text-xs text-gray-400 mb-4">Sei Giorgio o Federico? Accedi con il PIN.</p>
+                <button onclick="switchNavTab('admin')" class="bg-crossGray hover:bg-crossNeon hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-xl transition-all border border-crossNeon/30 text-crossNeon">
+                    <i class="fa-solid fa-key mr-1.5"></i> Apri Pannello Admin
+                </button>
+            </div>
+        </div>
+        <div class="w-full max-w-4xl mx-auto px-4 border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-center">
+            <p>&copy; 2026 CrossGear 3D di Giorgio & Federico. Tutti i diritti riservati.</p>
+            <p class="text-crossNeon font-medium mt-2 sm:mt-0">Stampato in 3D con stile Giallo Fluo ✊💨</p>
+        </div>
     </footer>
 
-    <aside aria-hidden="true" aria-label="Carrello">
-        <div><h2>IL TUO BOX</h2></div>
-        <div><p>Il carrello è vuoto.<br>Trova il tuo prossimo pezzo.</p></div>
-        <div><div><span>Totale</span><b>€0,00</b></div></div>
-    </aside>
-    <section aria-hidden="true">
-        <div><p>QUASI FATTO</p><h2>DATI PER<br><em>L'ORDINE.</em></h2><p>Inserisci i tuoi dati: Giorgio e Federico riceveranno l'ordine e ti contatteranno per confermare.</p></div>
-    </section>
+    <script>
+        const products = [
+            { id: 1, name: "Tappo lavaggio cassa filtro", price: 12.99 },
+            { id: 2, name: "Tappo lavaggio marmitta", price: 8.99 },
+            { id: 3, name: "Tappi lavaggio pulsanti manubrio", price: 7.99 }
+        ];
+
+        let cart = [];
+        let currentTab = 'home';
+        let loggedCustomer = null;
+        let isAdminLoggedIn = false;
+
+        let orders = [
+            {
+                orderId: "ORD-3D-901",
+                date: "26/09/2026 21:45",
+                customer: {
+                    name: "Matteo",
+                    surname: "Belli",
+                    email: "matteo.mx@libero.it",
+                    address: "Via Bologna 88, Bologna",
+                    phone: "3356677889",
+                    notes: "Citofonare 3"
+                },
+                items: [
+                    { name: "Tappo lavaggio cassa filtro", price: 12.99, qty: 1, brand: "Honda", disp: "250cc 4T", year: "2024", color: "Giallo Fluo Racing (#ccff00)", customText: "#73" }
+                ],
+                total: 12.99,
+                status: "Da Stampare"
+            }
+        ];
+
+        window.onload = function() {
+            updateCartUI();
+            checkLocalStorageState();
+            switchNavTab('home');
+        };
+
+        function switchNavTab(tab) {
+            currentTab = tab;
+            
+            const homeView = document.getElementById('homeView');
+            const shopView = document.getElementById('shopView');
+            const adminView = document.getElementById('adminView');
+
+            const navHomeBtn = document.getElementById('navHomeBtn');
+            const navShopBtn = document.getElementById('navShopBtn');
+            const navAdminBtn = document.getElementById('navAdminBtn');
+
+            homeView.classList.add('hidden');
+            shopView.classList.add('hidden');
+            adminView.classList.add('hidden');
+
+            navHomeBtn.className = "bg-crossGray hover:bg-crossNeon hover:text-black text-gray-200 font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl transition-all border border-crossGray";
+            navShopBtn.className = "bg-crossGray hover:bg-crossNeon hover:text-black text-gray-200 font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl transition-all border border-crossGray";
+            navAdminBtn.className = "bg-crossGray hover:bg-crossNeon hover:text-black text-crossNeon font-bold uppercase tracking-wider text-xs px-3.5 py-2 rounded-xl transition-all border border-crossNeon/30";
+
+            if (tab === 'home') {
+                homeView.classList.remove('hidden');
+                navHomeBtn.className = "bg-crossNeon text-black font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl transition-all shadow-md";
+            } else if (tab === 'shop') {
+                shopView.classList.remove('hidden');
+                navShopBtn.className = "bg-crossNeon text-black font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl transition-all shadow-md";
+            } else if (tab === 'admin') {
+                adminView.classList.remove('hidden');
+                navAdminBtn.className = "bg-crossNeon text-black font-bold uppercase tracking-wider text-xs px-3.5 py-2 rounded-xl transition-all shadow-md";
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAdminMode() {
+            switchNavTab('admin');
+        }
+
+        function openConfigModal(productId) {
+            const product = products.find(p => p.id === productId);
+            document.getElementById('configProductId').value = product.id;
+            document.getElementById('configModalTitle').innerText = product.name;
+            document.getElementById('configDisp').value = '';
+            document.getElementById('configYear').value = '';
+            document.getElementById('configCustomText').value = '';
+            document.getElementById('configModal').classList.remove('hidden');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.add('hidden');
+        }
+
+        function handleConfigSubmit(event) {
+            event.preventDefault();
+            const productId = parseInt(document.getElementById('configProductId').value);
+            const product = products.find(p => p.id === productId);
+            const brand = document.getElementById('configBrand').value;
+            const disp = document.getElementById('configDisp').value.trim();
+            const year = document.getElementById('configYear').value.trim();
+            const color = document.getElementById('configColor').value;
+            const customText = document.getElementById('configCustomText').value.trim() || "Nessuno";
+
+            const cartKey = `${productId}-${brand}-${disp}-${year}-${color}-${customText}`;
+            const existing = cart.find(item => item.cartKey === cartKey);
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    cartKey,
+                    brand,
+                    disp,
+                    year,
+                    color,
+                    customText,
+                    qty: 1
+                });
+            }
+
+            closeConfigModal();
+            updateCartUI();
+            showToast("Aggiunto al carrello!", `${product.name} (${brand} ${disp})`);
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').innerText = count;
+
+            const list = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="text-center py-16 text-gray-500"><i class="fa-solid fa-cart-shopping text-4xl mb-3 opacity-30"></i><p class="text-sm">Il tuo carrello è vuoto.</p></div>`;
+                document.getElementById('cartTotalPrice').innerText = "€ 0.00";
+                return;
+            }
+
+            let total = 0;
+            list.innerHTML = cart.map((item, index) => {
+                total += item.price * item.qty;
+                return `
+                    <div class="bg-crossDark border border-crossGray p-3.5 rounded-xl space-y-2 text-xs">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">${item.name}</h4>
+                                <p class="text-crossNeon font-semibold">€ ${item.price.toFixed(2)} x ${item.qty}</p>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <button onclick="changeQty(${index}, -1)" class="w-6 h-6 bg-crossGray hover:bg-crossNeon hover:text-black text-white rounded flex items-center justify-center font-bold">-</button>
+                                <span class="font-bold w-4 text-center text-white">${item.qty}</span>
+                                <button onclick="changeQty(${index}, 1)" class="w-6 h-6 bg-crossGray hover:bg-crossNeon hover:text-black text-white rounded flex items-center justify-center font-bold">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-crossCard px-3 py-2 rounded-lg space-y-1 border border-gray-800">
+                            <p class="text-gray-300"><span class="text-crossNeon font-bold">Moto:</span> ${item.brand} ${item.disp} (${item.year})</p>
+                            <p class="text-gray-300"><span class="text-crossNeon font-bold">Colore:</span> ${item.color}</p>
+                            <p class="text-gray-300"><span class="text-crossNeon font-bold">Personalizzazione:</span> ${item.customText}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cartTotalPrice').innerText = `€ ${total.toFixed(2)}`;
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').classList.remove('hidden');
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        function proceedToCheckoutRegistration() {
+            if (cart.length === 0) {
+                showToast("Carrello vuoto", "Aggiungi almeno un articolo prima di procedere.", "fa-triangle-exclamation");
+                return;
+            }
+            closeCart();
+
+            if (loggedCustomer) {
+                document.getElementById('regName').value = loggedCustomer.name;
+                document.getElementById('regSurname').value = loggedCustomer.surname;
+                document.getElementById('regEmail').value = loggedCustomer.email;
+                document.getElementById('regAddress').value = loggedCustomer.address;
+                document.getElementById('regPhone').value = loggedCustomer.phone;
+                document.getElementById('regNotes').value = loggedCustomer.notes || '';
+            }
+
+            document.getElementById('registrationModal').classList.remove('hidden');
+        }
+
+        function closeRegistrationModal() {
+            document.getElementById('registrationModal').classList.add('hidden');
+        }
+
+        function handleCompleteOrder(event) {
+            event.preventDefault();
+
+            const customerData = {
+                name: document.getElementById('regName').value.trim(),
+                surname: document.getElementById('regSurname').value.trim(),
+                email: document.getElementById('regEmail').value.trim(),
+                address: document.getElementById('regAddress').value.trim(),
+                phone: document.getElementById('regPhone').value.trim(),
+                notes: document.getElementById('regNotes').value.trim()
+            };
+
+            loggedCustomer = customerData;
+            document.getElementById('userBadge').classList.remove('hidden');
+            document.getElementById('userBadge').classList.add('flex');
+            document.getElementById('userNameDisplay').innerText = `${customerData.name} ${customerData.surname}`;
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const newOrderId = "ORD-3D-" + Math.floor(100 + Math.random() * 900);
+            const now = new Date();
+            const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const newOrder = {
+                orderId: newOrderId,
+                date: dateStr,
+                customer: customerData,
+                items: [...cart],
+                total: total,
+                status: "Da Stampare"
+            };
+
+            orders.unshift(newOrder);
+            saveOrdersToStorage();
+
+            cart = [];
+            updateCartUI();
+            closeRegistrationModal();
+
+            document.getElementById('successOrderId').innerText = `Codice Ordine: ${newOrderId}`;
+            document.getElementById('successModal').classList.remove('hidden');
+
+            if (isAdminLoggedIn) {
+                renderAdminOrders();
+            }
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        function logoutCustomer() {
+            loggedCustomer = null;
+            document.getElementById('userBadge').classList.remove('flex');
+            document.getElementById('userBadge').classList.add('hidden');
+            showToast("Account", "Disconnesso con successo.");
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const pin = document.getElementById('adminPinInput').value;
+            if (pin === "1234") {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLoginCard').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                renderAdminOrders();
+                showToast("Accesso Autorizzato", "Benvenuto Giorgio & Federico!", "fa-key");
+            } else {
+                showToast("PIN Errato", "Usa il PIN 1234", "fa-triangle-exclamation");
+            }
+        }
+
+        function lockAdminPanel() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminLoginCard').classList.remove('hidden');
+            document.getElementById('adminPinInput').value = "";
+            showToast("Admin", "Pannello protetto bloccato.");
+        }
+
+        function renderAdminOrders() {
+            document.getElementById('statTotalOrders').innerText = orders.length;
+            const totalRev = orders.reduce((sum, o) => sum + o.total, 0);
+            document.getElementById('statTotalRevenue').innerText = `€ ${totalRev.toFixed(2)}`;
+            const uniqueCust = new Set(orders.map(o => o.customer.email)).size;
+            document.getElementById('statTotalCustomers').innerText = uniqueCust;
+            document.getElementById('ordersCountBadge').innerText = `${orders.length} ordini registrati`;
+
+            const container = document.getElementById('adminOrdersContainer');
+            if (orders.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-gray-500">Nessun ordine ricevuto.</div>`;
+                return;
+            }
+
+            container.innerHTML = orders.map((ord, idx) => `
+                <div class="bg-crossDark border border-crossGray rounded-xl p-6 shadow-md transition-all hover:border-crossNeon/40">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-4 mb-4 border-b border-crossGray gap-2">
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-crossNeon text-black font-mono font-bold text-xs px-3 py-1 rounded-lg">${ord.orderId}</span>
+                            <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i> ${ord.date}</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <select onchange="updateOrderStatus(${idx}, this.value)" class="bg-crossCard border border-crossGray text-xs font-bold uppercase rounded-lg px-3 py-1.5 text-crossNeon focus:outline-none focus:border-crossNeon">
+                                <option value="Da Stampare" ${ord.status === 'Da Stampare' ? 'selected' : ''}>Da Stampare</option>
+                                <option value="In Stampa 3D" ${ord.status === 'In Stampa 3D' ? 'selected' : ''}>In Stampa 3D (Lab)</option>
+                                <option value="Spedito" ${ord.status === 'Spedito' ? 'selected' : ''}>Spedito 🚀</option>
+                            </select>
+                            <span class="text-xs font-bold px-3 py-1 rounded-lg ${ord.status === 'Spedito' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-crossNeon/20 text-crossNeon border border-crossNeon/30'}">
+                                ${ord.status}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 bg-crossCard/60 p-4 rounded-xl border border-gray-800 text-xs">
+                        <div>
+                            <p class="text-gray-400 uppercase font-bold text-[10px] mb-1">Cliente Registrato</p>
+                            <p class="text-white font-bold text-sm">${ord.customer.name} ${ord.customer.surname}</p>
+                            <p class="text-gray-300">${ord.customer.email}</p>
+                            <p class="text-crossNeon font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i> ${ord.customer.phone}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 uppercase font-bold text-[10px] mb-1">Indirizzo di Spedizione</p>
+                            <p class="text-gray-200">${ord.customer.address}</p>
+                            ${ord.customer.notes ? `<p class="text-gray-400 mt-1"><i class="fa-solid fa-note-sticky text-crossNeon mr-1"></i> Note: ${ord.customer.notes}</p>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold uppercase text-gray-400">Articoli & Specifiche di Stampa 3D:</p>
+                        <div class="space-y-2">
+                            ${ord.items.map(item => `
+                                <div class="bg-crossCard border border-gray-800 p-3.5 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs gap-2">
+                                    <div>
+                                        <p class="text-white font-bold text-sm">${item.qty}x ${item.name}</p>
+                                        <div class="flex flex-wrap gap-3 mt-2 text-[11px]">
+                                            <span class="text-crossNeon"><i class="fa-solid fa-motorcycle mr-1"></i> Moto: <strong>${item.brand} ${item.disp} (${item.year})</strong></span>
+                                            <span class="text-gray-300"><i class="fa-solid fa-palette mr-1"></i> Colore: <strong>${item.color}</strong></span>
+                                            <span class="text-gray-300"><i class="fa-solid fa-font mr-1"></i> Custom: <strong class="text-white bg-crossDark px-2 py-0.5 rounded border border-gray-700">${item.customText}</strong></span>
+                                        </div>
+                                    </div>
+                                    <span class="font-bold text-crossNeon text-base">€ ${(item.price * item.qty).toFixed(2)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-sm">
+                        <span class="text-gray-400 font-bold uppercase text-xs">Totale Ordine:</span>
+                        <span class="font-racing text-2xl text-crossNeon">€ ${ord.total.toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateOrderStatus(index, newStatus) {
+            orders[index].status = newStatus;
+            saveOrdersToStorage();
+            renderAdminOrders();
+            showToast("Aggiornato", `Ordine ${orders[index].orderId}: ${newStatus}`);
+        }
+
+        function resetDemoOrders() {
+            if (confirm("Vuoi ripristinare gli ordini demo iniziali?")) {
+                localStorage.removeItem('crossgear_3d_orders_v2');
+                location.reload();
+            }
+        }
+
+        function saveOrdersToStorage() {
+            localStorage.setItem('crossgear_3d_orders_v2', JSON.stringify(orders));
+        }
+
+        function checkLocalStorageState() {
+            const saved = localStorage.getItem('crossgear_3d_orders_v2');
+            if (saved) {
+                try {
+                    orders = JSON.parse(saved);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        }
+
+        function showToast(title, message, iconClass = "fa-cube") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMsg').innerText = message;
+            document.getElementById('toastIcon').className = `fa-solid ${iconClass}`;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+    </script>
 </body>
 </html>
