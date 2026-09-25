@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
     <header class="header">
@@ -74,7 +75,7 @@
         <div><p class="eyebrow">DOMANDE VELOCI</p><h2>PRIMA DI<br /><em>PARTIRE.</em></h2></div>
         <div class="faq-list">
           <details open><summary>Che materiale usate? <span>+</span></summary><p>Per questa demo abbiamo indicato PETG tecnico: è resistente a urti, umidità e all’uso in garage. Il materiale definitivo sarà specificato per ogni prodotto.</p></details>
-          <details><summary>Come posso ordinare? <span>+</span></summary><p>In questa prima versione il checkout prepara il messaggio d’ordine su WhatsApp: è il modo più semplice per iniziare e ricevere conferma da noi.</p></details>
+          <details><summary>Come posso ordinare? <span>+</span></summary><p>Completa la richiesta sul sito: Giorgio e Federico la riceveranno nel pannello ordini e ti contatteranno per la conferma.</p></details>
           <details><summary>Potete fare pezzi personalizzati? <span>+</span></summary><p>Sì. Scrivici con modello della moto, foto e idea: valuteremo insieme fattibilità e preventivo.</p></details>
         </div>
       </section>
@@ -85,8 +86,11 @@
     <aside class="cart-panel" id="cartPanel" aria-label="Carrello" aria-hidden="true">
       <div class="cart-header"><h2>IL TUO BOX</h2><button id="closeCart" aria-label="Chiudi carrello">×</button></div>
       <div id="cartItems" class="cart-items"><p class="empty">Il carrello è vuoto.<br />Trova il tuo prossimo pezzo.</p></div>
-      <div class="cart-footer"><div><span>Totale</span><b id="cartTotal">€0,00</b></div><button class="button primary checkout" id="checkout">Ordina su WhatsApp <span>→</span></button></div>
+      <div class="cart-footer"><div><span>Totale</span><b id="cartTotal">€0,00</b></div><button class="button primary checkout" id="checkout">Continua con l'ordine <span>→</span></button></div>
     </aside>
+    <section class="order-modal" id="orderModal" aria-hidden="true">
+      <div class="order-card"><button class="modal-close" id="closeOrder" aria-label="Chiudi">×</button><p class="eyebrow">QUASI FATTO</p><h2>DATI PER<br /><em>L'ORDINE.</em></h2><p class="order-intro">Inserisci i tuoi dati: Giorgio e Federico riceveranno l'ordine e ti contatteranno per confermare.</p><form id="orderForm"><label>Nome e cognome<input required name="name" placeholder="Es. Marco Rossi" /></label><label>Telefono<input required name="phone" type="tel" placeholder="Es. 333 1234567" /></label><label>Email <small>(facoltativa)</small><input name="email" type="email" placeholder="nome@email.it" /></label><label>Note <small>(facoltative)</small><textarea name="note" placeholder="Modello moto, colore o richiesta..."></textarea></label><button class="button primary submit-order" type="submit">Invia richiesta <span>→</span></button></form></div>
+    </section>
     <div class="overlay" id="overlay"></div>
     <script src="script.js"></script>
   </body>
