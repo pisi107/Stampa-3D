@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Accessori 3D per moto da cross, ideati e prodotti da Giorgio e Federico." />
+    <title>GF Offroad Lab — Accessori 3D per Cross</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="brand" href="#top" aria-label="GF Offroad Lab, torna all'inizio">
+        <span class="brand-mark">GF</span>
+        <span><b>OFFROAD</b><small>3D PERFORMANCE LAB</small></span>
+      </a>
+      <nav aria-label="Navigazione principale">
+        <a href="#prodotti">Shop</a>
+        <a href="#chi-siamo">Chi siamo</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button class="cart-button" id="cartButton" aria-label="Apri il carrello">
+        Carrello <span id="cartCount">0</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">PROGETTATI PER SPORCARSI</p>
+          <h1>PEZZI PICCOLI.<br /><em>GIORNATE GRANDI.</em></h1>
+          <p class="hero-text">Accessori stampati in 3D per chi vive la moto da cross davvero: semplici, robusti, utili.</p>
+          <a class="button primary" href="#prodotti">Scopri i prodotti <span>→</span></a>
+        </div>
+        <aside class="hero-card">
+          <span>01 / 03</span>
+          <div class="plug-illustration" aria-hidden="true"><i></i><i></i><i></i></div>
+          <strong>TAPPO LAVAGGIO<br />SCARICO</strong>
+          <small>IL PRIMO PEZZO DEL LAB</small>
+        </aside>
+        <div class="scroll-note">SCROLL TO RIDE <span>↓</span></div>
+      </section>
+
+      <section class="marquee" aria-label="Caratteristiche">
+        <span>MADE FOR MUD</span><i>✦</i><span>STAMPATO IN ITALIA</span><i>✦</i><span>TESTATO IN PISTA</span><i>✦</i><span>FATTO DA RIDER</span><i>✦</i>
+      </section>
+
+      <section class="products section" id="prodotti">
+        <div class="section-heading">
+          <div><p class="eyebrow">IL PRIMO DROP</p><h2>ESSENZIALI<br /><em>DA BOX.</em></h2></div>
+          <p>La collezione iniziale. Ogni componente nasce per risolvere un piccolo problema quando sei in garage, al lavaggio o al circuito.</p>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <section class="why section">
+        <div class="why-visual"><div class="number">3D</div><p>DAL FILE ALLA TUA MOTO</p></div>
+        <div class="why-copy"><p class="eyebrow">IL NOSTRO METODO</p><h2>FUNZIONE<br />PRIMA DI TUTTO.</h2><p>Progettiamo accessori che vorremmo trovare anche noi nel borsone. Materiali resistenti, geometrie studiate e produzione in piccoli lotti.</p>
+          <div class="features"><div><b>01</b><span>Progettato<br />in casa</span></div><div><b>02</b><span>Stampato<br />in 3D</span></div><div><b>03</b><span>Provato<br />nel fango</span></div></div>
+        </div>
+      </section>
+
+      <section class="about section" id="chi-siamo">
+        <p class="eyebrow">DUE AMICI, UNA PASSIONE</p>
+        <h2>SIAMO GIORGIO<br />E <em>FEDERICO.</em></h2>
+        <p>GF Offroad Lab parte da qui: moto, weekend in pista e la voglia di costruire accessori più intelligenti. Questo è solo l’inizio.</p>
+        <a href="mailto:ciao@gfoffroadlab.it" class="text-link">Parliamo del tuo prossimo pezzo <span>↗</span></a>
+      </section>
+
+      <section class="faq section" id="faq">
+        <div><p class="eyebrow">DOMANDE VELOCI</p><h2>PRIMA DI<br /><em>PARTIRE.</em></h2></div>
+        <div class="faq-list">
+          <details open><summary>Che materiale usate? <span>+</span></summary><p>Per questa demo abbiamo indicato PETG tecnico: è resistente a urti, umidità e all’uso in garage. Il materiale definitivo sarà specificato per ogni prodotto.</p></details>
+          <details><summary>Come posso ordinare? <span>+</span></summary><p>In questa prima versione il checkout prepara il messaggio d’ordine su WhatsApp: è il modo più semplice per iniziare e ricevere conferma da noi.</p></details>
+          <details><summary>Potete fare pezzi personalizzati? <span>+</span></summary><p>Sì. Scrivici con modello della moto, foto e idea: valuteremo insieme fattibilità e preventivo.</p></details>
+        </div>
+      </section>
+    </main>
+
+    <footer><a class="brand" href="#top"><span class="brand-mark">GF</span><span><b>OFFROAD</b><small>3D PERFORMANCE LAB</small></span></a><p>© <span id="year"></span> Giorgio & Federico — Italia</p><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a></footer>
+
+    <aside class="cart-panel" id="cartPanel" aria-label="Carrello" aria-hidden="true">
+      <div class="cart-header"><h2>IL TUO BOX</h2><button id="closeCart" aria-label="Chiudi carrello">×</button></div>
+      <div id="cartItems" class="cart-items"><p class="empty">Il carrello è vuoto.<br />Trova il tuo prossimo pezzo.</p></div>
+      <div class="cart-footer"><div><span>Totale</span><b id="cartTotal">€0,00</b></div><button class="button primary checkout" id="checkout">Ordina su WhatsApp <span>→</span></button></div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
