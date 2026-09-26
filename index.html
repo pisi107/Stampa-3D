@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrossGear 3D | Accessori 3D per Motocross</title>
-    <!-- Tailwind CSS CDN -->
+    <title>CrossGear 3D | Accessori & Gadget Motocross</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -15,13 +16,17 @@
                         darkBg: '#0b0b0b',
                         cardBg: '#141414',
                         borderGray: '#262626'
+                    },
+                    fontFamily: {
+                        racing: ['Orbitron', 'sans-serif'],
+                        body: ['Montserrat', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    <!-- Google Fonts: Montserrat & Rajdhani -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Orbitron & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -29,221 +34,339 @@
             color: #f3f4f6;
         }
         .font-racing {
-            font-family: 'Rajdhani', sans-serif;
-        }
-        .bg-neon {
-            background-color: #ccff00;
-        }
-        .text-neon {
-            color: #ccff00;
-        }
-        .border-neon {
-            border-color: #ccff00;
-        }
-        .hover\:bg-neon-dark:hover {
-            background-color: #b3e600;
+            font-family: 'Orbitron', sans-serif;
         }
     </style>
 </head>
 <body class="bg-darkBg text-white antialiased selection:bg-neon selection:text-black">
 
-    <!-- Top Free Shipping Bar -->
-    <div id="shipping-banner" class="bg-neon text-black text-xs md:text-sm font-bold py-2 px-4 text-center tracking-wider uppercase font-racing transition-all duration-300">
-        🔥 Spedizione gratuita in Italia a partire da 25,00 €! <span id="shipping-progress-text">Mancano 25,00 €</span> ✊
+    <div class="bg-neon text-black border-b border-borderGray py-2.5 px-4 font-bold">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm font-racing uppercase tracking-wider">
+            <span class="text-black">🔥 Spedizione gratuita in Italia da 25,00 €</span>
+            <div class="w-full sm:w-64 bg-black/20 border border-black/30 rounded-full h-3 overflow-hidden p-0.5 relative">
+                <div id="shipping-progress-bar" class="bg-black h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <span id="shipping-progress-text" class="text-black font-extrabold">Mancano 25,00 €</span>
+        </div>
     </div>
 
-    <!-- Header / Navigation -->
     <header class="sticky top-0 z-40 bg-darkBg/95 backdrop-blur border-b border-borderGray">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo -->
-            <a href="#" class="flex items-center space-x-2 group">
+            <a href="#" onclick="showPage('story')" class="flex items-center space-x-2 group">
                 <span class="text-2xl sm:text-3xl font-black font-racing tracking-wider uppercase text-white group-hover:text-neon transition">
                     CROSS<span class="text-neon group-hover:text-white">GEAR</span> 3D
                 </span>
             </a>
 
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center space-x-8 font-racing text-lg tracking-wide">
-                <a href="#shop" class="hover:text-neon transition">Shop 3D</a>
-                <a href="#about" class="hover:text-neon transition">I Fondatori</a>
-                <a href="#contact" class="hover:text-neon transition">Contatti</a>
-            </nav>
-
-            <!-- Cart & Admin Buttons -->
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleCart()" class="relative bg-cardBg border border-borderGray hover:border-neon px-4 py-2 rounded-xl flex items-center space-x-2 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Right Controls: Cart & Hamburger Menu -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleCart()" class="relative bg-cardBg border border-borderGray hover:border-neon px-4 py-2.5 rounded-xl flex items-center space-x-2 transition cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <span id="cart-count" class="font-racing font-bold text-neon bg-black/50 px-2 py-0.5 rounded-md text-sm">0</span>
+                    <span id="cart-count" class="font-racing font-bold text-neon text-sm">0</span>
+                </button>
+                <button onclick="toggleMobileMenu()" class="bg-cardBg border border-borderGray hover:border-neon p-2.5 rounded-xl text-zinc-300 hover:text-neon transition cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative py-20 lg:py-32 overflow-hidden border-b border-borderGray text-center">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-90 -z-10"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
+    <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-black/95 backdrop-blur flex flex-col justify-center items-center space-y-8 p-6">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-2xl font-racing text-zinc-400 hover:text-white">✕</button>
+        <button onclick="showPage('story'); toggleMobileMenu();" class="text-2xl font-racing font-bold uppercase tracking-widest text-white hover:text-neon transition">Home & Storia</button>
+        <button onclick="showPage('shop'); toggleMobileMenu();" class="text-2xl font-racing font-bold uppercase tracking-widest text-white hover:text-neon transition">Vai al Catalogo</button>
+        <button onclick="openAdminModal(); toggleMobileMenu();" class="text-2xl font-racing font-bold uppercase tracking-widest text-zinc-400 hover:text-neon transition">Area Admin</button>
+    </div>
+
+    <section id="page-story" class="min-h-[85vh] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-95 -z-10"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
             <span class="inline-block bg-cardBg border border-borderGray text-neon text-xs sm:text-sm font-racing px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">
-                ⚡ Stampato in 3D in Italia • PETG & TPU Rinforzato
+                ⚡ Dalla scuola ai circuiti di fango
             </span>
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black font-racing uppercase tracking-tight mb-6">
-                Accessori da Cross <br><span class="text-neon">Distruttibili Mai.</span>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black font-racing uppercase tracking-tight mb-8">
+                LA NOSTRA STORIA
             </h1>
-            <p class="text-zinc-400 text-base sm:text-xl max-w-2xl mb-10 font-normal">
-                Progettati da Giorgio e Federico per resistere al fango, all'idropulitrice e alle partenze a tutto gas nei circuiti di tutta Italia.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <a href="#shop" class="bg-neon text-black font-racing font-bold text-lg px-8 py-4 rounded-xl uppercase tracking-wider hover:bg-neon-dark transition text-center shadow-lg shadow-neon/10">
-                    Sfoglia il Catalogo 3D
-                </a>
+            <div class="bg-cardBg border border-borderGray p-8 sm:p-12 rounded-3xl text-left space-y-6 shadow-2xl">
+                <p class="text-zinc-300 text-base sm:text-lg leading-relaxed">
+                    Tutto è iniziato tra i banchi di scuola. <strong>Giorgio e Federico</strong> si sono conosciuti condividendo la stessa identica passione: l'ingegneria, le moto da cross e il mondo della manifattura additiva. Entrambi avevano una stampante 3D accesa giorno e notte nella propria cameretta.
+                </p>
+                <p class="text-zinc-300 text-base sm:text-lg leading-relaxed">
+                    Stufi di perdere o rompere tappi e protezioni originali fragili e costosissimi ogni volta che scendevano in pista nei weekend, hanno deciso di unire le forze. Hanno iniziato a progettare e testare mescole in PETG e TPU rinforzato direttamente nel fango dei crossodromi lombardi. Nasce così <strong>CrossGear 3D</strong>: accessori indistruttibili, pensati da piloti per i piloti.
+                </p>
+            </div>
+            <div class="mt-10">
+                <button onclick="showPage('shop')" class="inline-block bg-neon text-black font-racing font-bold text-lg px-8 py-4 rounded-xl uppercase tracking-wider hover:bg-zinc-200 transition shadow-lg shadow-neon/15 cursor-pointer">
+                    Vai al catalogo ✊
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Promo Banner Code Section -->
-    <section class="bg-cardBg border-y border-borderGray py-6 text-center">
-        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <span class="font-racing text-lg uppercase tracking-wider text-zinc-300">Usa il codice sconto al checkout:</span>
-            <span class="bg-black border border-neon text-neon font-racing font-bold px-4 py-2 rounded-xl text-xl tracking-widest shadow-md">LAUNCH10</span>
-            <span class="text-xs text-zinc-400">(10% di sconto sul primo ordine)</span>
-        </div>
-    </section>
-
-    <!-- Shop Catalog Section -->
-    <section id="shop" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl sm:text-5xl font-black font-racing uppercase tracking-tight">Catalogo <span class="text-neon">CrossGear 3D</span></h2>
-            <p class="text-zinc-400 mt-2">Selezionati e testati direttamente in pista.</p>
+    <section id="page-shop" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 hidden">
+        <div class="flex items-center justify-between mb-12">
+            <div>
+                <h2 class="text-3xl sm:text-5xl font-black font-racing uppercase tracking-tight">Catalogo <span class="text-neon">CrossGear 3D</span></h2>
+                <p class="text-zinc-400 mt-2 font-normal">Accessori tecnici per moto e gadget esclusivi stampati in 3D.</p>
+            </div>
+            <button onclick="showPage('story')" class="bg-cardBg border border-borderGray hover:border-neon px-5 py-2.5 rounded-xl font-racing font-bold uppercase text-sm text-zinc-300 hover:text-neon transition cursor-pointer">
+                ← Torna alla Storia
+            </button>
         </div>
 
-        <!-- Brand Quick Filter ("La tua moto") -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
-            <span class="text-sm font-racing uppercase tracking-wider text-zinc-400 mr-2">La tua moto:</span>
-            <button onclick="filterByBrand('all')" id="btn-brand-all" class="brand-filter-btn px-4 py-2 rounded-xl text-sm font-racing font-bold uppercase transition bg-neon text-black">Tutte</button>
-            <button onclick="filterByBrand('KTM')" id="btn-brand-KTM" class="brand-filter-btn px-4 py-2 rounded-xl text-sm font-racing font-bold uppercase transition bg-cardBg border border-borderGray text-zinc-300 hover:border-neon">KTM</button>
-            <button onclick="filterByBrand('Yamaha')" id="btn-brand-Yamaha" class="brand-filter-btn px-4 py-2 rounded-xl text-sm font-racing font-bold uppercase transition bg-cardBg border border-borderGray text-zinc-300 hover:border-neon">Yamaha</button>
-            <button onclick="filterByBrand('Honda')" id="btn-brand-Honda" class="brand-filter-btn px-4 py-2 rounded-xl text-sm font-racing font-bold uppercase transition bg-cardBg border border-borderGray text-zinc-300 hover:border-neon">Honda</button>
-            <button onclick="filterByBrand('GasGas')" id="btn-brand-GasGas" class="brand-filter-btn px-4 py-2 rounded-xl text-sm font-racing font-bold uppercase transition bg-cardBg border border-borderGray text-zinc-300 hover:border-neon">GasGas</button>
-            <button onclick="filterByBrand('Husqvarna')" id="btn-brand-Husqvarna" class="brand-filter-btn px-4 py-2 rounded-xl text-sm font-racing font-bold uppercase transition bg-cardBg border border-borderGray text-zinc-300 hover:border-neon">Husqvarna</button>
-        </div>
-
-        <!-- Products Grid -->
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Product 1 -->
-            <div class="product-card bg-cardBg border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group" data-brand="KTM Yamaha Husqvarna GasGas Honda Universal">
-                <div>
-                    <div class="bg-black/40 border border-borderGray rounded-xl h-48 flex items-center justify-center mb-6 relative overflow-hidden group-hover:border-neon/50 transition">
-                        <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Bestseller</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
+        <!-- SEZIONE 1: ACCESSORI MOTO (ACCORDION TOGGLE) -->
+        <div class="mb-8 border border-borderGray rounded-2xl overflow-hidden bg-cardBg">
+            <button onclick="toggleAccordion('moto-section', 'moto-icon')" class="w-full p-6 flex items-center justify-between text-left hover:bg-zinc-900 transition cursor-pointer">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🛠️</span>
+                    <h3 class="text-xl sm:text-2xl font-black font-racing uppercase tracking-wider text-neon">Accessori Moto (Configurabili)</h3>
+                </div>
+                <span id="moto-icon" class="font-racing font-bold text-xl text-neon transition-transform duration-300 transform rotate-180">▼</span>
+            </button>
+            <div id="moto-section" class="p-6 pt-0 border-t border-borderGray">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                    <!-- Product 1 -->
+                    <div class="bg-black/40 border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group">
+                        <div>
+                            <div class="bg-black/60 border border-borderGray rounded-xl h-40 flex items-center justify-center mb-4 relative overflow-hidden group-hover:border-neon/50 transition">
+                                <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Bestseller</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Tappo lavaggio cassa filtro</h4>
+                            <p class="text-zinc-400 text-xs mt-2">Protegge l'airbox da acqua e fango durante il lavaggio con idropulitrice. Tenuta stagna garantita.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
+                            <span class="text-xl font-black font-racing text-neon">€12,99</span>
+                            <button onclick="openConfigModal('Tappo lavaggio cassa filtro', 12.99, 'moto')" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Aggiungi
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Tappo lavaggio cassa filtro</h3>
-                    <p class="text-zinc-400 text-sm mt-2">Protegge l'airbox da acqua e fango durante il lavaggio con idropulitrice. Tenuta stagna garantita.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
-                    <span class="text-2xl font-black font-racing text-neon">€12,99</span>
-                    <button onclick="addToCart('Tappo lavaggio cassa filtro', 12.99)" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2.5 rounded-xl uppercase tracking-wider transition">
-                        Aggiungi
-                    </button>
+
+                    <!-- Product 2 -->
+                    <div class="bg-black/40 border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group">
+                        <div>
+                            <div class="bg-black/60 border border-borderGray rounded-xl h-40 flex items-center justify-center mb-4 relative overflow-hidden group-hover:border-neon/50 transition">
+                                <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Indispensabile</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Tappo lavaggio marmitta</h4>
+                            <p class="text-zinc-400 text-xs mt-2">Evita infiltrazioni d'acqua nello scarico durante il lavaggio della moto. Con orecchietta di estrazione rapida.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
+                            <span class="text-xl font-black font-racing text-neon">€8,99</span>
+                            <button onclick="openConfigModal('Tappo lavaggio marmitta', 8.99, 'moto')" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Aggiungi
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="bg-black/40 border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group">
+                        <div>
+                            <div class="bg-black/60 border border-borderGray rounded-xl h-40 flex items-center justify-center mb-4 relative overflow-hidden group-hover:border-neon/50 transition">
+                                <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Novità 3D</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110-4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Tappi lavaggio pulsanti manubrio</h4>
+                            <p class="text-zinc-400 text-xs mt-2">Proteggono i comandi elettronici del manubrio e l'impianto elettrico dai cortocircuiti causati dai getti d'acqua.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
+                            <span class="text-xl font-black font-racing text-neon">€7,99</span>
+                            <button onclick="openConfigModal('Tappi lavaggio pulsanti manubrio', 7.99, 'moto')" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Aggiungi
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Product 2 -->
-            <div class="product-card bg-cardBg border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group" data-brand="KTM Yamaha Husqvarna GasGas Honda Universal">
-                <div>
-                    <div class="bg-black/40 border border-borderGray rounded-xl h-48 flex items-center justify-center mb-6 relative overflow-hidden group-hover:border-neon/50 transition">
-                        <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Indispensabile</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
+        <!-- SEZIONE 2: GADGET & MERCHANDISING (ACCORDION TOGGLE) -->
+        <div class="border border-borderGray rounded-2xl overflow-hidden bg-cardBg">
+            <button onclick="toggleAccordion('gadget-section', 'gadget-icon')" class="w-full p-6 flex items-center justify-between text-left hover:bg-zinc-900 transition cursor-pointer">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🔥</span>
+                    <h3 class="text-xl sm:text-2xl font-black font-racing uppercase tracking-wider text-neon">Gadget & Merchandising 3D</h3>
+                </div>
+                <span id="gadget-icon" class="font-racing font-bold text-xl text-neon transition-transform duration-300 transform rotate-180">▼</span>
+            </button>
+            <div id="gadget-section" class="p-6 pt-0 border-t border-borderGray">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                    <!-- Gadget 1 -->
+                    <div class="bg-black/40 border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group">
+                        <div>
+                            <div class="bg-black/60 border border-borderGray rounded-xl h-40 flex items-center justify-center mb-4 relative overflow-hidden group-hover:border-neon/50 transition">
+                                <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Must-Have</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Portachiavi Casco Cross 3D</h4>
+                            <p class="text-zinc-400 text-xs mt-2">Miniatura dettagliatissima di un casco da cross con occhialina, stampata in bi-colore in resistente polimero.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
+                            <span class="text-xl font-black font-racing text-neon">€5,99</span>
+                            <button onclick="openConfigModal('Portachiavi Casco Cross 3D', 5.99, 'gadget')" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Aggiungi
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Tappo lavaggio marmitta</h3>
-                    <p class="text-zinc-400 text-sm mt-2">Evita infiltrazioni d'acqua nello scarico durante il lavaggio della moto. Con orecchietta di estrazione rapida.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
-                    <span class="text-2xl font-black font-racing text-neon">€8,99</span>
-                    <button onclick="addToCart('Tappo lavaggio marmitta', 8.99)" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2.5 rounded-xl uppercase tracking-wider transition">
-                        Aggiungi
-                    </button>
-                </div>
-            </div>
 
-            <!-- Product 3 -->
-            <div class="product-card bg-cardBg border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group" data-brand="KTM Yamaha Husqvarna GasGas Honda Universal">
-                <div>
-                    <div class="bg-black/40 border border-borderGray rounded-xl h-48 flex items-center justify-center mb-6 relative overflow-hidden group-hover:border-neon/50 transition">
-                        <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Novità 3D</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                        </svg>
+                    <!-- Gadget 2 -->
+                    <div class="bg-black/40 border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group">
+                        <div>
+                            <div class="bg-black/60 border border-borderGray rounded-xl h-40 flex items-center justify-center mb-4 relative overflow-hidden group-hover:border-neon/50 transition">
+                                <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Paddock</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Espositore Moto Paddock 3D</h4>
+                            <p class="text-zinc-400 text-xs mt-2">Pratico cavalletto espositore da scrivania brandizzato CrossGear per modellini e moto da cross in scala.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
+                            <span class="text-xl font-black font-racing text-neon">€14,99</span>
+                            <button onclick="openConfigModal('Espositore Moto Paddock 3D', 14.99, 'gadget')" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Aggiungi
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Tappi lavaggio pulsanti manubrio</h3>
-                    <p class="text-zinc-400 text-sm mt-2">Proteggono i comandi elettronici del manubrio e l'impianto elettrico dai cortocircuiti causati dai getti d'acqua.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
-                    <span class="text-2xl font-black font-racing text-neon">€7,99</span>
-                    <button onclick="addToCart('Tappi lavaggio pulsanti manubrio', 7.99)" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2.5 rounded-xl uppercase tracking-wider transition">
-                        Aggiungi
-                    </button>
+
+                    <!-- Gadget 3 -->
+                    <div class="bg-black/40 border border-borderGray rounded-2xl p-6 flex flex-col justify-between transition hover:border-neon group">
+                        <div>
+                            <div class="bg-black/60 border border-borderGray rounded-xl h-40 flex items-center justify-center mb-4 relative overflow-hidden group-hover:border-neon/50 transition">
+                                <div class="absolute top-3 right-3 bg-neon text-black text-xs font-racing font-bold px-2.5 py-1 rounded-lg uppercase">Limited</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 73.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold font-racing uppercase tracking-wide group-hover:text-neon transition">Set Sticker Resinati & Stencil</h4>
+                            <p class="text-zinc-400 text-xs mt-2">Kit completo di adesivi in resina 3D resistenti al fango e stencil per personalizzare i fianchetti della moto.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-borderGray flex items-center justify-between">
+                            <span class="text-xl font-black font-racing text-neon">€9,99</span>
+                            <button onclick="openConfigModal('Set Sticker Resinati & Stencil', 9.99, 'gadget')" class="bg-cardBg border border-neon text-neon hover:bg-neon hover:text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Aggiungi
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-cardBg border-t border-borderGray text-center">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-5xl font-black font-racing uppercase tracking-tight mb-6">Chi c'è dietro <span class="text-neon">CrossGear 3D</span></h2>
-            <p class="text-zinc-300 text-lg leading-relaxed mb-8">
-                Siamo <strong>Giorgio e Federico</strong>, piloti amatoriali e maker appassionati di stampa 3D. Stufi di veder rompere accessori commerciali fragili o troppo costosi, abbiamo deciso di fonderci in un unico progetto artigianale dedicato a chi vive la pista ogni weekend. Ogni pezzo stampato è testato direttamente nel fango dei circuiti lombardi.
-            </p>
-            <div class="flex flex-wrap justify-center gap-6 font-racing text-neon text-lg">
-                <span class="bg-black px-6 py-3 rounded-xl border border-borderGray">✊ 100% Testato in Pista</span>
-                <span class="bg-black px-6 py-3 rounded-xl border border-borderGray">⚡ Materiali ad Alta Resistenza</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact" class="bg-black border-t border-borderGray py-12 text-center text-zinc-500 text-sm">
+    <footer class="bg-black border-t border-borderGray py-12 text-center text-zinc-500 text-sm">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
             <p class="font-racing uppercase tracking-wider text-white text-lg">CrossGear 3D • Made for Dirt & Mud</p>
             <p>© 2026 Giorgio & Federico. Tutti i diritti riservati.</p>
             <div class="pt-4">
-                <button onclick="openAdminModal()" class="text-xs uppercase tracking-widest bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-neon hover:border-neon px-4 py-2 rounded-lg transition font-racing font-bold">
+                <button onclick="openAdminModal()" class="text-xs uppercase tracking-widest bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-neon hover:border-neon px-4 py-2 rounded-lg transition font-racing font-bold cursor-pointer">
                     🔒 Area Admin (Giorgio & Federico)
                 </button>
             </div>
         </div>
     </footer>
 
-    <!-- Cart Drawer Modal -->
+    <div id="config-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen px-4 text-center flex items-center justify-center">
+            <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeConfigModal()"></div>
+            <div class="inline-block w-full max-w-md p-8 my-8 text-left align-middle transition-all transform bg-cardBg border border-borderGray rounded-2xl relative z-10 shadow-2xl">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="config-product-title" class="text-xl font-black font-racing uppercase tracking-wider text-neon">Configura Articolo</h3>
+                    <button onclick="closeConfigModal()" class="text-zinc-400 hover:text-white font-racing text-lg font-bold cursor-pointer">✕</button>
+                </div>
+                <form onsubmit="submitConfiguredItem(event)" class="space-y-4">
+                    <!-- Campi Moto visibili solo se è un accessorio moto -->
+                    <div id="moto-fields-container" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Marca Moto</label>
+                            <select id="config-marca" class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none">
+                                <option value="">Seleziona marca...</option>
+                                <option value="KTM">KTM</option>
+                                <option value="Yamaha">Yamaha</option>
+                                <option value="Honda">Honda</option>
+                                <option value="GasGas">GasGas</option>
+                                <option value="Husqvarna">Husqvarna</option>
+                                <option value="Kawasaki">Kawasaki</option>
+                                <option value="Suzuki">Suzuki</option>
+                                <option value="Universal">Universale / Altro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Cilindrata</label>
+                            <select id="config-cilindrata" class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none">
+                                <option value="">Seleziona cilindrata...</option>
+                                <option value="50cc">50cc</option>
+                                <option value="85cc">85cc</option>
+                                <option value="125cc">125cc (2T)</option>
+                                <option value="250cc">250cc (2T / 4T)</option>
+                                <option value="300cc">300cc (2T)</option>
+                                <option value="350cc">350cc (4T)</option>
+                                <option value="450cc">450cc (4T)</option>
+                                <option value="Universale">Universale</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Anno Moto</label>
+                            <input type="text" id="config-anno" placeholder="es. 2024 o 2021-2026" class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Colori dinamici impostati da Admin (per entrambi) -->
+                    <div>
+                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-2">Colore Stampa 3D</label>
+                        <div id="config-colors-container" class="flex flex-wrap gap-3">
+                            <!-- Popolato da JS -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Note e personalizzazione facoltative</label>
+                        <textarea id="config-notes" rows="2" placeholder="Es. Nome personalizzato, numero gara o richieste speciali..." class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-neon text-black font-racing font-bold text-lg py-3 rounded-xl uppercase tracking-wider hover:bg-zinc-200 transition text-center shadow-lg cursor-pointer">
+                            Aggiungi al Carrello ✊
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
         <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
             <div class="w-screen max-w-md bg-cardBg border-l border-borderGray flex flex-col">
-                <!-- Cart Header -->
                 <div class="p-6 border-b border-borderGray flex items-center justify-between">
                     <h2 class="text-xl font-black font-racing uppercase tracking-wider">Il tuo carrello</h2>
-                    <button onclick="toggleCart()" class="text-zinc-400 hover:text-white font-racing text-lg font-bold">✕ Chiudi</button>
+                    <button onclick="toggleCart()" class="text-zinc-400 hover:text-white font-racing text-lg font-bold cursor-pointer">✕ Chiudi</button>
                 </div>
-                <!-- Cart Items Body -->
                 <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
                     <!-- Dinamico -->
                 </div>
-                <!-- Cart Footer & Checkout -->
                 <div class="p-6 border-t border-borderGray space-y-4 bg-black/40">
-                    <!-- Promo Code Input -->
+                    <!-- Promo Code -->
                     <div class="flex gap-2">
                         <input type="text" id="promo-input" placeholder="Codice promo (es. LAUNCH10)" class="flex-1 bg-black border border-borderGray rounded-xl px-4 py-2.5 text-sm uppercase font-racing text-white focus:border-neon outline-none">
-                        <button onclick="applyPromoCode()" class="bg-cardHover bg-zinc-800 border border-borderGray hover:border-neon font-racing font-bold px-4 py-2.5 rounded-xl uppercase tracking-wider text-sm transition">Applica</button>
+                        <button onclick="applyPromoCode()" class="bg-zinc-800 border border-borderGray hover:border-neon font-racing font-bold px-4 py-2.5 rounded-xl uppercase tracking-wider text-sm transition cursor-pointer">Applica</button>
                     </div>
                     <div id="promo-message" class="text-xs font-racing text-neon hidden"></div>
 
-                    <!-- Totali -->
                     <div class="space-y-2 text-sm">
                         <div class="flex justify-between text-zinc-400">
                             <span>Subtotale</span>
@@ -263,27 +386,7 @@
                         </div>
                     </div>
 
-                    <!-- Checkout Shipping Option -->
-                    <div class="space-y-2 pt-2">
-                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400">Modalità di consegna</label>
-                        <select id="shipping-method" onchange="updateCartTotals()" class="w-full bg-black border border-borderGray rounded-xl px-4 py-2.5 text-sm font-racing text-white focus:border-neon outline-none">
-                            <option value="courier">Corriere Espresso 24/48h (€5,00)</option>
-                            <option value="pickup">Ritiro in Pista (Gratuito - Lombardia)</option>
-                        </select>
-                    </div>
-
-                    <!-- Trackside Pickup Selector (Hidden by default) -->
-                    <div id="pickup-track-container" class="space-y-2 hidden">
-                        <label class="block text-xs font-racing uppercase tracking-wider text-neon">Seleziona Crossodromo di Ritiro</label>
-                        <select id="pickup-track" class="w-full bg-black border border-neon rounded-xl px-4 py-2.5 text-sm font-racing text-white focus:border-neon outline-none">
-                            <option value="Malpensa">Malpensa (MX Muggiano / Samarate)</option>
-                            <option value="Dorno">Dorno (PV)</option>
-                            <option value="Ottobiano">Ottobiano Motorsport (PV)</option>
-                            <option value="Rivarolo">Rivarolo Mantovano (MN)</option>
-                        </select>
-                    </div>
-
-                    <button onclick="openCheckoutModal()" class="w-full bg-neon text-black font-racing font-bold text-lg py-4 rounded-xl uppercase tracking-wider hover:bg-neon-dark transition text-center shadow-lg">
+                    <button onclick="openCheckoutModal()" class="w-full bg-neon text-black font-racing font-bold text-lg py-4 rounded-xl uppercase tracking-wider hover:bg-zinc-200 transition text-center shadow-lg cursor-pointer">
                         Procedi al Checkout
                     </button>
                 </div>
@@ -291,30 +394,42 @@
         </div>
     </div>
 
-    <!-- Checkout Form Modal -->
     <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="min-h-screen px-4 text-center flex items-center justify-center">
             <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
             <div class="inline-block w-full max-w-lg p-8 my-8 text-left align-middle transition-all transform bg-cardBg border border-borderGray rounded-2xl relative z-10 shadow-2xl">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-black font-racing uppercase tracking-wider">Dati Spedizione</h3>
-                    <button onclick="closeCheckoutModal()" class="text-zinc-400 hover:text-white font-racing text-lg font-bold">✕</button>
+                    <h3 class="text-2xl font-black font-racing uppercase tracking-wider">Dati di Spedizione</h3>
+                    <button onclick="closeCheckoutModal()" class="text-zinc-400 hover:text-white font-racing text-lg font-bold cursor-pointer">✕</button>
                 </div>
-                <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Nome e Cognome</label>
-                        <input type="text" id="order-name" required class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none">
+                <form onsubmit="submitOrder(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Nome</label>
+                            <input type="text" id="order-nome" required class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none" placeholder="Mario">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Cognome</label>
+                            <input type="text" id="order-cognome" required class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none" placeholder="Rossi">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Email</label>
-                        <input type="email" id="order-email" required class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none">
+                        <input type="email" id="order-email" required class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none" placeholder="mario@example.com">
                     </div>
                     <div>
-                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Indirizzo di Spedizione / Note</label>
-                        <textarea id="order-address" required rows="3" class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none" placeholder="Via, Città, CAP (o tracciato prescelto)"></textarea>
+                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Indirizzo</label>
+                        <input type="text" id="order-indirizzo" required class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none" placeholder="Via Roma 12, Milano (CAP 20121)">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-racing uppercase tracking-wider text-zinc-400 mb-1">Spedizione</label>
+                        <select id="order-spedizione" class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:border-neon outline-none">
+                            <option value="A casa">A casa</option>
+                            <option value="In pista">In pista</option>
+                        </select>
                     </div>
                     <div class="pt-4">
-                        <button type="submit" class="w-full bg-neon text-black font-racing font-bold text-lg py-4 rounded-xl uppercase tracking-wider hover:bg-neon-dark transition text-center shadow-lg">
+                        <button type="submit" class="w-full bg-neon text-black font-racing font-bold text-lg py-4 rounded-xl uppercase tracking-wider hover:bg-zinc-200 transition text-center shadow-lg cursor-pointer">
                             Conferma Ordine ✊
                         </button>
                     </div>
@@ -323,31 +438,73 @@
         </div>
     </div>
 
-    <!-- Admin PIN Modal -->
     <div id="admin-pin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="min-h-screen px-4 text-center flex items-center justify-center">
             <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAdminModal()"></div>
             <div class="inline-block w-full max-w-sm p-8 my-8 text-center align-middle transition-all transform bg-cardBg border border-borderGray rounded-2xl relative z-10 shadow-2xl">
                 <h3 class="text-xl font-black font-racing uppercase tracking-wider mb-4">Area Riservata Admin</h3>
-                <p class="text-xs text-zinc-400 mb-6">Inserisci il PIN di accesso per Giorgio & Federico</p>
+                <p class="text-xs text-zinc-400 mb-6">Inserisci il PIN per Giorgio & Federico</p>
                 <input type="password" id="admin-pin-input" placeholder="PIN (es. 1234)" class="w-full bg-black border border-borderGray rounded-xl px-4 py-3 text-center text-xl font-racing tracking-widest text-neon focus:border-neon outline-none mb-4">
-                <button onclick="verifyAdminPin()" class="w-full bg-neon text-black font-racing font-bold py-3 rounded-xl uppercase tracking-wider hover:bg-neon-dark transition">Accedi</button>
+                <button onclick="verifyAdminPin()" class="w-full bg-neon text-black font-racing font-bold py-3 rounded-xl uppercase tracking-wider hover:bg-zinc-200 transition cursor-pointer">Accedi</button>
             </div>
         </div>
     </div>
 
-    <!-- Admin Dashboard Modal -->
     <div id="admin-dashboard-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-black">
         <div class="max-w-7xl mx-auto px-4 py-10">
             <div class="flex justify-between items-center mb-8 border-b border-borderGray pb-4">
                 <div>
                     <h2 class="text-3xl font-black font-racing uppercase tracking-wider">Dashboard <span class="text-neon">Giorgio & Federico</span></h2>
-                    <p class="text-zinc-400 text-sm">Gestione ordini e produzione stampanti 3D</p>
+                    <p class="text-zinc-400 text-sm">Gestione ordini e colori filament 3D</p>
                 </div>
-                <button onclick="closeAdminDashboard()" class="bg-cardBg border border-borderGray px-4 py-2 rounded-xl font-racing font-bold uppercase text-sm hover:border-neon transition">Chiudi Dashboard</button>
+                <button onclick="closeAdminDashboard()" class="bg-cardBg border border-borderGray px-4 py-2 rounded-xl font-racing font-bold uppercase text-sm hover:border-neon transition cursor-pointer">Chiudi</button>
             </div>
 
-            <!-- Stats Bar -->
+            <!-- Sezione Gestione Colori 3D da parte di Giorgio & Federico -->
+            <div class="bg-cardBg border border-borderGray p-6 rounded-2xl mb-8">
+                <h3 class="font-racing font-bold uppercase text-lg mb-4 text-neon">Gestione Colori Disponibili (Filamenti 3D)</h3>
+                <p class="text-xs text-zinc-400 mb-4">Clicca sul pallino colorato di un filamento per aprire la tabella dei colori e cambiarlo in tempo reale.</p>
+                <div class="flex flex-wrap gap-3 mb-6" id="admin-colors-list">
+                    <!-- Dinamico -->
+                </div>
+                <div class="flex gap-2 max-w-md">
+                    <input type="text" id="new-color-name" placeholder="Nome colore (es. Giallo Fluo)" class="flex-1 bg-black border border-borderGray rounded-xl px-4 py-2 text-sm text-white focus:border-neon outline-none">
+                    <input type="color" id="new-color-hex" value="#ccff00" class="h-10 w-12 bg-black border border-borderGray rounded-xl cursor-pointer p-1">
+                    <button onclick="addNewColor()" class="bg-neon text-black font-racing font-bold px-5 py-2 rounded-xl text-xs uppercase tracking-wider hover:bg-zinc-200 transition cursor-pointer">Aggiungi</button>
+                </div>
+            </div>
+
+            <!-- Tabella Palette Colori Modal/Popover interattivo per modifica -->
+            <div id="admin-color-picker-popover" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+                <div class="bg-cardBg border border-borderGray p-6 rounded-2xl max-w-md w-full shadow-2xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-racing font-bold uppercase text-sm text-neon">Seleziona Nuovo Colore Filamento</h4>
+                        <button onclick="closeColorPickerPopover()" class="text-zinc-400 hover:text-white font-bold cursor-pointer">✕</button>
+                    </div>
+                    <p id="picker-target-name" class="text-xs text-zinc-400 mb-4"></p>
+                    <div class="grid grid-cols-6 gap-3 mb-6">
+                        <!-- Preset Palette Swatches -->
+                        <div onclick="selectPaletteColor('#ccff00')" class="h-10 rounded-xl bg-[#ccff00] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#ff6600')" class="h-10 rounded-xl bg-[#ff6600] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#0055ff')" class="h-10 rounded-xl bg-[#0055ff] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#ff0000')" class="h-10 rounded-xl bg-[#ff0000] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#00ff66')" class="h-10 rounded-xl bg-[#00ff66] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#ff00ff')" class="h-10 rounded-xl bg-[#ff00ff] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#ffff00')" class="h-10 rounded-xl bg-[#ffff00] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#ffffff')" class="h-10 rounded-xl bg-[#ffffff] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#888888')" class="h-10 rounded-xl bg-[#888888] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#1a1a1a')" class="h-10 rounded-xl bg-[#1a1a1a] cursor-pointer border-2 border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#734114')" class="h-10 rounded-xl bg-[#734114] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                        <div onclick="selectPaletteColor('#9900ff')" class="h-10 rounded-xl bg-[#9900ff] cursor-pointer border-2 border-transparent hover:border-white transition shadow"></div>
+                    </div>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-borderGray">
+                        <span class="text-xs text-zinc-400">Personalizzato:</span>
+                        <input type="color" id="custom-picker-input" value="#ccff00" class="h-10 flex-1 bg-black border border-borderGray rounded-xl cursor-pointer p-1">
+                        <button onclick="applyCustomPickerColor()" class="bg-neon text-black font-racing font-bold px-4 py-2 rounded-xl text-xs uppercase cursor-pointer">Conferma</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
                 <div class="bg-cardBg border border-borderGray p-6 rounded-2xl">
                     <p class="text-xs font-racing uppercase tracking-wider text-zinc-400">Ordini Totali</p>
@@ -358,26 +515,25 @@
                     <p id="admin-stat-revenue" class="text-3xl font-black font-racing text-neon mt-2">€0,00</p>
                 </div>
                 <div class="bg-cardBg border border-borderGray p-6 rounded-2xl">
-                    <p class="text-xs font-racing uppercase tracking-wider text-zinc-400">Stato Produzione</p>
+                    <p class="text-xs font-racing uppercase tracking-wider text-zinc-400">Stato Produzione 3D</p>
                     <p class="text-3xl font-black font-racing text-neon mt-2">Attiva 🚀</p>
                 </div>
             </div>
 
-            <!-- Orders Table -->
             <div class="bg-cardBg border border-borderGray rounded-2xl overflow-hidden">
                 <div class="p-6 border-b border-borderGray">
-                    <h3 class="font-racing font-bold uppercase text-lg">Storico Ordini in Tempo Reale</h3>
+                    <h3 class="font-racing font-bold uppercase text-lg">Storico Ordini & Dettagli Moto</h3>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-black/50 text-zinc-400 font-racing uppercase text-xs">
                             <tr>
-                                <th class="p-4">ID Ordine</th>
+                                <th class="p-4">ID</th>
                                 <th class="p-4">Cliente</th>
-                                <th class="p-4">Articoli</th>
-                                <th class="p-4">Consegna</th>
+                                <th class="p-4">Articolo & Moto Configurata</th>
+                                <th class="p-4">Spedizione</th>
                                 <th class="p-4">Totale</th>
-                                <th class="p-4">Stato Stampa</th>
+                                <th class="p-4">Stato</th>
                             </tr>
                         </thead>
                         <tbody id="admin-orders-table" class="divide-y divide-borderGray">
@@ -389,52 +545,156 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
         let cart = [];
         let discountPercent = 0;
-        let appliedPromo = '';
+        let selectedProductForConfig = null;
+        let selectedCardColor = null;
+        let activeEditingColorIndex = null;
 
-        // Brand filtering in Shop
-        function filterByBrand(brand) {
-            document.querySelectorAll('.brand-filter-btn').forEach(btn => {
-                btn.classList.remove('bg-neon', 'text-black');
-                btn.classList.add('bg-cardBg', 'border', 'border-borderGray', 'text-zinc-300');
-            });
-            const activeBtn = document.getElementById(`btn-brand-${brand}`);
-            if(activeBtn) {
-                activeBtn.classList.remove('bg-cardBg', 'border', 'border-borderGray', 'text-zinc-300');
-                activeBtn.classList.add('bg-neon', 'text-black');
+        const defaultColors = [
+            { name: 'Giallo Fluo', hex: '#ccff00' },
+            { name: 'Nero Opaco', hex: '#1a1a1a' },
+            { name: 'Arancio KTM', hex: '#ff6600' },
+            { name: 'Blu Yamaha', hex: '#0055ff' },
+            { name: 'Rosso Honda', hex: '#ff0000' }
+        ];
+
+        function getStoredColors() {
+            const stored = localStorage.getItem('crossgear_colors');
+            if (!stored) {
+                localStorage.setItem('crossgear_colors', JSON.stringify(defaultColors));
+                return defaultColors;
             }
-
-            const cards = document.querySelectorAll('.product-card');
-            cards.forEach(card => {
-                const brands = card.getAttribute('data-brand');
-                if (brand === 'all' || brands.includes(brand)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            return JSON.parse(stored);
         }
 
-        // Cart Management
+        window.addEventListener('DOMContentLoaded', () => {
+            const motoSec = document.getElementById('moto-section');
+            const gadgetSec = document.getElementById('gadget-section');
+            motoSec.style.display = 'none';
+            gadgetSec.style.display = 'none';
+        });
+
+        function toggleAccordion(sectionId, iconId) {
+            const section = document.getElementById(sectionId);
+            const icon = document.getElementById(iconId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                section.style.display = 'none';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function showPage(pageId) {
+            const storyPage = document.getElementById('page-story');
+            const shopPage = document.getElementById('page-shop');
+
+            if (pageId === 'story') {
+                storyPage.classList.remove('hidden');
+                shopPage.classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (pageId === 'shop') {
+                storyPage.classList.add('hidden');
+                shopPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openConfigModal(name, price, type) {
+            selectedProductForConfig = { name, price, type };
+            document.getElementById('config-product-title').innerText = `Configura: ${name}`;
+            
+            const motoFieldsContainer = document.getElementById('moto-fields-container');
+            if (type === 'moto') {
+                motoFieldsContainer.style.display = 'block';
+                document.getElementById('config-marca').required = true;
+                document.getElementById('config-cilindrata').required = true;
+                document.getElementById('config-anno').required = true;
+                document.getElementById('config-marca').value = '';
+                document.getElementById('config-cilindrata').value = '';
+                document.getElementById('config-anno').value = '';
+            } else {
+                motoFieldsContainer.style.display = 'none';
+                document.getElementById('config-marca').required = false;
+                document.getElementById('config-cilindrata').required = false;
+                document.getElementById('config-anno').required = false;
+            }
+
+            document.getElementById('config-notes').value = '';
+
+            renderColorSelectionInModal();
+            document.getElementById('config-modal').classList.remove('hidden');
+        }
+
+        function renderColorSelectionInModal() {
+            const colors = getStoredColors();
+            const container = document.getElementById('config-colors-container');
+            selectedCardColor = colors[0]?.name || 'Standard';
+
+            container.innerHTML = colors.map((c, idx) => `
+                <button type="button" onclick="selectConfigColor('${c.name}', this)" class="color-btn flex items-center space-x-2 bg-black border ${idx === 0 ? 'border-neon' : 'border-borderGray'} px-3 py-2 rounded-xl text-xs font-racing transition hover:border-neon cursor-pointer">
+                    <span class="w-4 h-4 rounded-full border border-white/20 shadow" style="background-color: ${c.hex}"></span>
+                    <span class="text-white">${c.name}</span>
+                </button>
+            `).join('');
+        }
+
+        function selectConfigColor(colorName, btnElement) {
+            selectedCardColor = colorName;
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-neon'));
+            btnElement.classList.add('border-neon');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('config-modal').classList.add('hidden');
+            selectedProductForConfig = null;
+        }
+
+        function submitConfiguredItem(e) {
+            e.preventDefault();
+            if (!selectedProductForConfig) return;
+
+            let fullName = selectedProductForConfig.name;
+
+            if (selectedProductForConfig.type === 'moto') {
+                const marca = document.getElementById('config-marca').value;
+                const cilindrata = document.getElementById('config-cilindrata').value;
+                const anno = document.getElementById('config-anno').value;
+                fullName += ` (${marca} ${cilindrata} - ${anno})`;
+            }
+
+            fullName += ` [Colore: ${selectedCardColor}]`;
+
+            const notes = document.getElementById('config-notes').value.trim();
+            if (notes) {
+                fullName += ` [Note/Personalizzazione: ${notes}]`;
+            }
+            
+            const existing = cart.find(item => item.name === fullName);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ name: fullName, price: selectedProductForConfig.price, qty: 1 });
+            }
+
+            closeConfigModal();
+            updateCartBadge();
+            renderCart();
+            toggleCart();
+        }
+
         function toggleCart() {
             const drawer = document.getElementById('cart-drawer');
             drawer.classList.toggle('hidden');
             renderCart();
-        }
-
-        function addToCart(name, price) {
-            const existing = cart.find(item => item.name === name);
-            if (existing) {
-                existing.qty++;
-            } else {
-                cart.push({ name, price, qty: 1 });
-            }
-            updateCartBadge();
-            renderCart();
-            toggleCart();
         }
 
         function updateCartBadge() {
@@ -454,9 +714,9 @@
                             <p class="text-xs text-neon mt-1">€${item.price.toFixed(2)} x ${item.qty}</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button onclick="changeQty(${index}, -1)" class="bg-zinc-800 px-2.5 py-1 rounded-lg text-xs font-bold">-</button>
+                            <button onclick="changeQty(${index}, -1)" class="bg-zinc-800 px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer">-</button>
                             <span class="font-racing text-sm">${item.qty}</span>
-                            <button onclick="changeQty(${index}, 1)" class="bg-zinc-800 px-2.5 py-1 rounded-lg text-xs font-bold">+</button>
+                            <button onclick="changeQty(${index}, 1)" class="bg-zinc-800 px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer">+</button>
                         </div>
                     </div>
                 `).join('');
@@ -480,19 +740,16 @@
 
             if (codeInput === 'LAUNCH10') {
                 discountPercent = 10;
-                appliedPromo = 'LAUNCH10';
                 msgEl.innerText = '✅ Codice applicato: -10%';
-                msgEl.className = 'text-xs font-racing text-neon';
+                msgEl.className = 'text-xs font-racing text-black font-extrabold';
             } else if (codeInput === 'CROSSGEAR') {
                 discountPercent = 15;
-                appliedPromo = 'CROSSGEAR';
                 msgEl.innerText = '✅ Codice applicato: -15%';
-                msgEl.className = 'text-xs font-racing text-neon';
+                msgEl.className = 'text-xs font-racing text-black font-extrabold';
             } else {
                 discountPercent = 0;
-                appliedPromo = '';
                 msgEl.innerText = '❌ Codice non valido';
-                msgEl.className = 'text-xs font-racing text-red-500';
+                msgEl.className = 'text-xs font-racing text-red-900 font-bold';
             }
             updateCartTotals();
         }
@@ -502,29 +759,21 @@
             const discount = (subtotal * discountPercent) / 100;
             const subAfterDiscount = subtotal - discount;
 
-            const shippingMethod = document.getElementById('shipping-method').value;
-            const pickupContainer = document.getElementById('pickup-track-container');
-            
             let shipping = 5.00;
-            if (shippingMethod === 'pickup') {
+            if (subAfterDiscount >= 25.00) {
                 shipping = 0.00;
-                pickupContainer.classList.remove('hidden');
-            } else {
-                pickupContainer.classList.add('hidden');
-                if (subAfterDiscount >= 25.00) {
-                    shipping = 0.00; // Free shipping threshold
-                }
             }
 
             const total = subAfterDiscount + shipping;
-
-            // Update free shipping top banner progress
             const diff = 25.00 - subAfterDiscount;
+            const progressPercent = Math.min(100, (subAfterDiscount / 25.00) * 100);
+            document.getElementById('shipping-progress-bar').style.width = `${progressPercent}%`;
+
             const progressText = document.getElementById('shipping-progress-text');
             if (subAfterDiscount >= 25.00) {
                 progressText.innerText = 'Spedizione gratuita sbloccata!';
             } else {
-                progressText.innerText = `Mancano €${diff.toFixed(2)} alla spedizione gratuita`;
+                progressText.innerText = `Mancano €${diff.toFixed(2)}`;
             }
 
             document.getElementById('cart-subtotal').innerText = `€${subtotal.toFixed(2)}`;
@@ -533,7 +782,6 @@
             document.getElementById('cart-total').innerText = `€${total.toFixed(2)}`;
         }
 
-        // Checkout & Orders
         function openCheckoutModal() {
             if (cart.length === 0) {
                 alert('Il carrello è vuoto!');
@@ -549,22 +797,22 @@
 
         function submitOrder(e) {
             e.preventDefault();
-            const name = document.getElementById('order-name').value;
+            const nome = document.getElementById('order-nome').value;
+            const cognome = document.getElementById('order-cognome').value;
             const email = document.getElementById('order-email').value;
-            const address = document.getElementById('order-address').value;
-            const shippingMethod = document.getElementById('shipping-method').value;
-            const track = shippingMethod === 'pickup' ? document.getElementById('pickup-track').value : 'Corriere Espresso';
+            const indirizzo = document.getElementById('order-indirizzo').value;
+            const spedizione = document.getElementById('order-spedizione').value;
 
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const discount = (subtotal * discountPercent) / 100;
-            const shipping = (subtotal - discount >= 25.00 || shippingMethod === 'pickup') ? 0.00 : 5.00;
+            const shipping = (subtotal - discount >= 25.00) ? 0.00 : 5.00;
             const total = (subtotal - discount) + shipping;
 
             const newOrder = {
                 id: 'CG-' + Math.floor(1000 + Math.random() * 9000),
-                name,
+                name: `${nome} ${cognome}`,
                 email,
-                address: `${address} (${track})`,
+                address: `${indirizzo} (${spedizione})`,
                 items: cart.map(i => `${i.qty}x ${i.name}`).join(', '),
                 total: `€${total.toFixed(2)}`,
                 status: 'In Stampa 3D'
@@ -574,13 +822,12 @@
             orders.unshift(newOrder);
             localStorage.setItem('crossgear_orders', JSON.stringify(orders));
 
-            alert('Ordine completato con successo! Grazie pilota, verrai ricontattato presto.');
+            alert('Ordine completato con successo! Grazie pilota.');
             cart = [];
             updateCartBadge();
             closeCheckoutModal();
         }
 
-        // Admin Modal & Dashboard
         function openAdminModal() {
             document.getElementById('admin-pin-modal').classList.remove('hidden');
         }
@@ -603,14 +850,86 @@
         function openAdminDashboard() {
             document.getElementById('admin-dashboard-modal').classList.remove('hidden');
             renderAdminDashboard();
+            renderAdminColorsManager();
         }
 
         function closeAdminDashboard() {
             document.getElementById('admin-dashboard-modal').classList.add('hidden');
         }
 
+        function renderAdminColorsManager() {
+            const colors = getStoredColors();
+            const container = document.getElementById('admin-colors-list');
+            container.innerHTML = colors.map((c, idx) => `
+                <div class="flex items-center space-x-2 bg-black border border-borderGray px-3 py-1.5 rounded-xl">
+                    <span onclick="openColorPickerPopover(${idx})" class="w-5 h-5 rounded-full border-2 border-white/40 cursor-pointer shadow hover:scale-110 transition inline-block" style="background-color: ${c.hex}" title="Clicca per cambiare colore"></span>
+                    <span class="text-xs font-racing text-white">${c.name}</span>
+                    <button onclick="deleteAdminColor(${idx})" class="text-zinc-500 hover:text-red-500 text-xs font-bold ml-2 cursor-pointer">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function openColorPickerPopover(index) {
+            activeEditingColorIndex = index;
+            const colors = getStoredColors();
+            const targetColor = colors[index];
+            document.getElementById('picker-target-name').innerText = `Modifica colore per: "${targetColor.name}"`;
+            document.getElementById('admin-color-picker-popover').classList.remove('hidden');
+        }
+
+        function closeColorPickerPopover() {
+            document.getElementById('admin-color-picker-popover').classList.add('hidden');
+            activeEditingColorIndex = null;
+        }
+
+        function selectPaletteColor(hex) {
+            if (activeEditingColorIndex === null) return;
+            let colors = getStoredColors();
+            if (colors[activeEditingColorIndex]) {
+                colors[activeEditingColorIndex].hex = hex;
+                localStorage.setItem('crossgear_colors', JSON.stringify(colors));
+                renderAdminColorsManager();
+            }
+            closeColorPickerPopover();
+        }
+
+        function applyCustomPickerColor() {
+            if (activeEditingColorIndex === null) return;
+            const customHex = document.getElementById('custom-picker-input').value;
+            let colors = getStoredColors();
+            if (colors[activeEditingColorIndex]) {
+                colors[activeEditingColorIndex].hex = customHex;
+                localStorage.setItem('crossgear_colors', JSON.stringify(colors));
+                renderAdminColorsManager();
+            }
+            closeColorPickerPopover();
+        }
+
+        function addNewColor() {
+            const name = document.getElementById('new-color-name').value.trim();
+            const hex = document.getElementById('new-color-hex').value;
+            if (!name) return;
+
+            let colors = getStoredColors();
+            colors.push({ name, hex });
+            localStorage.setItem('crossgear_colors', JSON.stringify(colors));
+
+            document.getElementById('new-color-name').value = '';
+            renderAdminColorsManager();
+        }
+
+        function deleteAdminColor(index) {
+            let colors = getStoredColors();
+            colors.splice(index, 1);
+            localStorage.setItem('crossgear_colors', JSON.stringify(colors));
+            renderAdminColorsManager();
+        }
+
         function renderAdminDashboard() {
-            const orders = JSON.parse(localStorage.getItem('crossgear_orders') || '[]');
+            // AZZERAMENTO: Pulisce eventuali ordini di test precedenti salvati nello storage
+            localStorage.setItem('crossgear_orders', JSON.stringify([]));
+            const orders = [];
+            
             document.getElementById('admin-stat-orders').innerText = orders.length;
 
             let totalRev = orders.reduce((sum, o) => sum + parseFloat(o.total.replace('€', '').replace(',', '.')), 0);
@@ -628,10 +947,9 @@
                     <td class="p-4">
                         <div class="font-bold">${o.name}</div>
                         <div class="text-xs text-zinc-400">${o.email}</div>
-                        <div class="text-xs text-zinc-500">${o.address}</div>
                     </td>
                     <td class="p-4 text-xs text-zinc-300">${o.items}</td>
-                    <td class="p-4 text-xs">${o.address.includes('Corriere') ? 'Spedizione' : 'Ritiro in Pista'}</td>
+                    <td class="p-4 text-xs">${o.address}</td>
                     <td class="p-4 font-racing font-bold">${o.total}</td>
                     <td class="p-4">
                         <select onchange="updateOrderStatus(${idx}, this.value)" class="bg-black border border-borderGray rounded-lg px-3 py-1.5 text-xs font-racing text-neon outline-none">
